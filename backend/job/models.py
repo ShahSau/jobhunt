@@ -70,6 +70,7 @@ class Job(models.Model):
     lastDate = models.DateTimeField(default=return_date_time)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
+    favorites = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         g = geocoder.mapquest(self.address, key=os.environ.get('GEOCODER_API'))
@@ -81,3 +82,15 @@ class Job(models.Model):
 
         self.point = Point(lng, lat)
         super(Job, self).save(*args, **kwargs)
+
+class CandidatesApplied(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    resume = models.CharField(max_length=200)
+    appliedAt = models.DateTimeField(auto_now_add=True)
+
+class CandidatesFavorite(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    favorite= models.BooleanField(default=False)
+
