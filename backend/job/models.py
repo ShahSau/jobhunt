@@ -70,7 +70,8 @@ class Job(models.Model):
     lastDate = models.DateTimeField(default=return_date_time)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
-    favorites = models.BooleanField(default=False)
+    remote = models.BooleanField(default=False)
+
 
     def save(self, *args, **kwargs):
         g = geocoder.mapquest(self.address, key=os.environ.get('GEOCODER_API'))

@@ -248,3 +248,48 @@ def getCandidatesApplied(request, pk):
     serializer = CandidatesAppliedSerializer(candidates, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+
+def getRemoteJobs(request):
+
+    filterset = Job.objects.all().filter(remote=True).order_by('id')
+    
+    serializer = JobSerializer(filterset, many=True)
+    return Response({
+        'jobs': serializer.data[0:5]
+        })
+
+@api_view(['GET'])
+
+def getHottestJobs(request):
+
+    filterset = Job.objects.all().order_by('salary').reverse()
+    
+    serializer = JobSerializer(filterset, many=True)
+    return Response({
+        'jobs': serializer.data[0:5]
+        })
+
+@api_view(['GET'])
+
+def getFresherJobs(request):
+
+    filterset = Job.objects.all().filter(experience='No Experience').order_by('id')
+    
+    serializer = JobSerializer(filterset, many=True)
+    return Response({
+        'jobs': serializer.data[0:5]
+        })
+
+@api_view(['GET'])
+
+def getNewestJobs(request):
+
+    filterset = Job.objects.all().order_by('createdAt').reverse()
+    
+    serializer = JobSerializer(filterset, many=True)
+    return Response({
+        'jobs': serializer.data[0:5]
+        })
