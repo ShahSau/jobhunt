@@ -11,7 +11,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
               <h2 className="text-lg font-medium text-gray-900">Recent Job</h2>
               <Link href="/search" className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
                 View all
-                <span aria-hidden="true"> &rarr;</span>
+                {/* <span aria-hidden="true"> &rarr;</span> */}
               </Link>
             </div>
             {/* recent job */}
@@ -38,13 +38,13 @@ const JobsSide = ({recentJob, remoteJob}) => {
     </div>
 
       {/* right side */}
-      <div className='w-full bg-white centered md:h-[1000px]'>
+    <div className='w-full bg-white centered md:h-[1000px]'>
       <div>
             <div className="flex items-center justify-between space-x-4 p-2">
               <h2 className="text-lg font-medium text-gray-900">Recent Job</h2>
-              <Link href="/search" className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
+              <Link href="/search" className="whitespace-wrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
                 View all
-                <span aria-hidden="true"> &rarr;</span>
+                {/* <span aria-hidden="true"> &rarr;</span> */}
               </Link>
             </div>
             {/* recent job */}

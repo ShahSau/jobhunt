@@ -5,7 +5,7 @@ from rest_framework import status
 from django.db.models import Avg, Min, Max, Count
 from .filters import JobsFilter
 from .serializers import JobSerializer, CandidatesAppliedSerializer, CandidatesFavoriteSerializer
-from .models import Job, CandidatesApplied
+from .models import Job, CandidatesApplied,CandidatesFavorite
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404

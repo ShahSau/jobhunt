@@ -98,7 +98,7 @@ const Header =()=> {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href="/appliedjobs"
+                              href="/applied"
                               className={classNames(active ? 'bg-gray-300' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Applied Jobs
@@ -108,7 +108,7 @@ const Header =()=> {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href="/favoritejobs"
+                              href="/favorite"
                               className={classNames(active ? 'bg-gray-300' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Favorite Jobs
