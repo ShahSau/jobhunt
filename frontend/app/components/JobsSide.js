@@ -9,10 +9,6 @@ const JobsSide = ({recentJob, remoteJob}) => {
       <div>
             <div className="flex items-center justify-between space-x-4 p-2">
               <h2 className="text-lg font-medium text-gray-900">Recent Job</h2>
-              <Link href="/search" className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                View all
-                {/* <span aria-hidden="true"> &rarr;</span> */}
-              </Link>
             </div>
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
@@ -33,6 +29,10 @@ const JobsSide = ({recentJob, remoteJob}) => {
                 </Link>
                 ))
               }
+              <Link href="/search" className="flex items-center justify-center whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                View all latest jobs
+                {/* <span aria-hidden="true"> &rarr;</span> */}
+              </Link>
             </div>
       </div>
     </div>
@@ -41,11 +41,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
     <div className='w-full bg-white centered md:h-[1000px]'>
       <div>
             <div className="flex items-center justify-between space-x-4 p-2">
-              <h2 className="text-lg font-medium text-gray-900">Recent Job</h2>
-              <Link href="/search" className="whitespace-wrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                View all
-                {/* <span aria-hidden="true"> &rarr;</span> */}
-              </Link>
+              <h2 className="text-lg font-medium text-gray-900">Remote Job</h2>
             </div>
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
@@ -66,6 +62,10 @@ const JobsSide = ({recentJob, remoteJob}) => {
                 </Link>
                 ))
               }
+              <Link href="/search" className="flex items-center justify-center whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                View all remote jobs
+                {/* <span aria-hidden="true"> &rarr;</span> */}
+              </Link>
             </div>
       </div>
     </div>
