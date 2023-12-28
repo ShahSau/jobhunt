@@ -37,10 +37,12 @@ def getAllJobs(request):
 @api_view(['GET'])
 def getJob(request, pk):
     job = get_object_or_404(Job, id=pk)
+
+    cabdidatesApplied = job.candidatesapplied_set.all().count()
     
     serializer = JobSerializer(job, many=False)
 
-    return Response(serializer.data)
+    return Response({'job':serializer.data, 'cabdidatesApplied':cabdidatesApplied})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

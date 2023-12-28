@@ -13,7 +13,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
               { recentJob.map((job, index) => (
-                <Link href={`/job/${job.id}`} key={index}>
+                <Link href={`/jobs/${job.id}`} key={index}>
                   <div key={index} className='bg-white rounded-md shadow-md'>
                     <div className="flex items-center justify-between space-x-4 p-2">
                       <h2 className="text-lg font-medium text-gray-900">{job.title}</h2>
@@ -46,7 +46,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
               { remoteJob.map((job, index) => (
-                <Link href={`/job/${job.id}`} key={index}>
+                <Link href={`/jobs/${job.id}`} key={index}>
                   <div key={index} className='bg-gray-100 rounded-md shadow-md'>
                     <div className="flex items-center justify-between space-x-4 p-2">
                       <h2 className="text-lg font-medium text-gray-900">{job.title}</h2>

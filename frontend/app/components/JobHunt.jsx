@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import { IoLocationSharp } from "react-icons/io5";
 import { BiTimeFive } from "react-icons/bi";
+import moment from 'moment';
+
 const JobHunt = ({name, data}) => {
   return (
     <div className="bg-white">
@@ -14,17 +16,18 @@ const JobHunt = ({name, data}) => {
             </Link>
           </div>
           <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
-            {data && data.map((job) => (
-              <Link href={`/jobs/${job.id}`}>
+            {data && data.map((job, index) => (
+              <Link href={`/jobs/${job.id}`} key={index}>
                 <div key={job.id} className="ml-6 md:ml-0 group group/item singleJob w-[250px] p-[20px] bg-gray-100 rounded-[10px] hover:bg-blueColor shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
 
                   <span className='flex justify-between items-center gap-4'>
                     <h1 className='text-[16px] font-semibold text-textColor group-hover:opacity-50'>{job.title}</h1>
                   </span>
-                  <h6 className='text-[#1d1d1d] group-hover:opacity-50'>{job.address}</h6>
+                  <h6 className='text-[#1d1d1d] group-hover:opacity-50 flex items-center gap-1'><IoLocationSharp/>{job.address}</h6>
 
                   <span className='flex items-center text-[#1d1d1d] gap-1 group-hover:opacity-50'>
-                    <BiTimeFive/>{new Date(job.createdAt).toDateString()}
+                    
+                    <BiTimeFive/>{moment(job.createdAt).fromNow()}
                   </span>
 
                   <p className='text-[13px] text-[#1d1d1d] pt-[20px] border-t-[2px] mt-[20px] group-hover:opacity-50'>
