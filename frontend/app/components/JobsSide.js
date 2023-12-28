@@ -8,7 +8,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
     <div className='w-full bg-gray-100 centered md:h-[1000px]'>
       <div>
             <div className="flex items-center justify-between space-x-4 p-2">
-              <h2 className="text-lg font-medium text-gray-900">Recent Job</h2>
+              <h2 className="text-xl font-bold text-gray-900">Recent Job</h2>
             </div>
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
@@ -22,7 +22,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
                     <p className='text-black text-sm space-x-4 p-2'>{job.description.slice(0,70)+'...'}</p>
                     <div className="flex items-center justify-between space-x-4 p-2">
                       <p className="text-sm font-medium text-gray-900">{job.remote ? 'Remote': job.address}</p>
-                      <p className="text-sm font-medium text-gray-900">{new Date(job.createdAt).toDateString()}</p>
+                      <p className="text-sm font-medium text-gray-900">Posted on: {new Date(job.createdAt).toDateString()}</p>
                     </div>
 
                   </div>
@@ -41,7 +41,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
     <div className='w-full bg-white centered md:h-[1000px]'>
       <div>
             <div className="flex items-center justify-between space-x-4 p-2">
-              <h2 className="text-lg font-medium text-gray-900">Remote Job</h2>
+              <h2 className="text-xl font-bold text-gray-900">Remote Job</h2>
             </div>
             {/* recent job */}
             <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8  sm:gap-y-10 p-6">
@@ -55,7 +55,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
                     <p className='text-black text-sm space-x-4 p-2'>{job.description.slice(0,70)+'...'}</p>
                     <div className="flex items-center justify-between space-x-4 p-2">
                       <p className="text-sm font-medium text-gray-900">{job.remote ? 'Remote': job.address}</p>
-                      <p className="text-sm font-medium text-gray-900">{new Date(job.createdAt).toDateString()}</p>
+                      <p className="text-sm font-medium text-gray-900">Posted on: {new Date(job.createdAt).toDateString()}</p>
                     </div>
 
                   </div>

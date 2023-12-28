@@ -269,7 +269,7 @@ def getHottestJobs(request):
     
     serializer = JobSerializer(filterset, many=True)
     return Response({
-        'jobs': serializer.data[0:5]
+        'jobs': serializer.data[0:8]
         })
 
 @api_view(['GET'])
@@ -280,7 +280,7 @@ def getFresherJobs(request):
     
     serializer = JobSerializer(filterset, many=True)
     return Response({
-        'jobs': serializer.data[0:5]
+        'jobs': serializer.data[0:8]
         })
 
 @api_view(['GET'])
