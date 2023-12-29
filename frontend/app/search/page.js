@@ -8,6 +8,7 @@ import axios from 'axios';
 import SearchComp from './SearchComp'
 import Loader from '../components/Loader'
 import { useSearchParams } from 'next/navigation'
+import Pagination from 'react-js-pagination'
 
 const filters = [
   {
@@ -62,15 +63,25 @@ const page = () => {
     const [jobs, setJobs] = useState([])
     const [loadingJob, setLoadingJob] = useState(true)
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-    const [call, setCall] = useState(0)
+    const [activePage, setActivePage] = useState(1)
+    const [count, setCount] = useState(0)
+    const [responsePerPage, setResponsePerPage] = useState(0)
+    const [keyword, setKeyword] = useState('')
+    const [location, setLocation] = useState('')
+
     const searchParams = useSearchParams()
     const jobTypeFromUrl = searchParams.get('jobType')
     const educationFromUrl = searchParams.get('education')
     const experienceFromUrl = searchParams.get('experience')
-    const salaryFromUrl = searchParams.get('salary')
+    const miniSalaryFromUrl = searchParams.get('min_salary')
+    const maxSalaryFromUrl = searchParams.get('max_salary')
     
-
-
+    let salaryFromUrl = null
+    
+    if(miniSalaryFromUrl != null && maxSalaryFromUrl != null){
+      salaryFromUrl = `${miniSalaryFromUrl}-${maxSalaryFromUrl}`
+    }
+    
     
     const [filterData, setFilterData] = useState({
       jobtype: jobTypeFromUrl != null ? jobTypeFromUrl : 'No Filter',
@@ -88,6 +99,9 @@ const page = () => {
       })
     }
 
+    const queryStr=`?jobType=${filterData.jobtype}&education=${filterData.education}&experience=${filterData.experience}&min_salary=${filterData.salary.split('-')[0]}&max_salary=${filterData.salary.split('-')[1]}&keyword=${keyword}&location=${location}`
+    
+
     const formSubmitHandler = () => {
       const values = Object.keys(filterData)
       values.forEach((value) => {
@@ -95,15 +109,20 @@ const page = () => {
           filterData[value] = ''
         }
       })
-      setCall(call + 1)
+      
+      fetchJobs()
       
     }
 
     const fetchJobs = async () => {
-      axios.get(`${process.env.API_URL}/api/jobs/?jobType=${filterData.jobtype}&education=${filterData.education}&experience=${filterData.experience}&min_salary=${filterData.salary.split('-')[0]}&max_salary=${filterData.salary.split('-')[1]}`)
+      axios.get(`${process.env.API_URL}/api/jobs/${queryStr}`)
       .then(response => {
         setJobs(response.data.jobs)
+        setCount(response.data.count)
+        
+        setResponsePerPage(response.data.resPerPage)
         setLoadingJob(false)
+        console.log(responsePerPage,count)
       })
       .catch(error => {
         console.log(error)
@@ -111,11 +130,8 @@ const page = () => {
   }
 
   useEffect(() => {
-    console.log('useEffect called')
-    
     fetchJobs()
-    console.log(jobs.length)
-  }, [call])
+  }, [])
 
   return (
     <div className="bg-">
@@ -166,6 +182,30 @@ const page = () => {
                       setMobileFiltersOpen(false)
                     }}
                   >
+                    <div className='bg-indigo-500 flex items-center mb-4'>
+                      <input
+                        type="keyword"
+                        name="keyword"
+                        id="keyword"
+                        className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                        placeholder="keyword"
+                        onChange={(e) => {
+                          setKeyword(e.target.value)
+                        }}
+                      />
+                  </div>
+                  <div className='bg-indigo-500 flex items-center'>
+                      <input
+                          type="location"
+                          name="location"
+                          id="location"
+                          className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                          placeholder="location"
+                          onChange={(e) => {
+                            setLocation(e.target.value)
+                          }}
+                        />
+                  </div>
                     {filters.map((section) => (
                       <Disclosure as="div" key={section.name} className="border-t border-gray-200 pb-4 pt-4">
                         {({ open }) => (
@@ -248,8 +288,33 @@ const page = () => {
                     formSubmitHandler()
                   }}
                 >
+                  <div className='bg-indigo-500 flex items-center'>
+                  <input
+                      type="keyword"
+                      name="keyword"
+                      id="keyword"
+                      className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                      placeholder="keyword"
+                      onChange={(e) => {
+                        setKeyword(e.target.value)
+                      }}
+                    />
+                  </div>
+                  <div className='bg-indigo-500 flex items-center'>
+                  <input
+                      type="location"
+                      name="location"
+                      id="location"
+                      className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                      placeholder="location"
+                      onChange={(e) => {
+                        setLocation(e.target.value)
+                      }}
+                    />
+                  </div>
+                  
                   {filters.map((section, sectionIdx) => (
-                    <div key={section.name} className={sectionIdx === 0 ? null : 'pt-10'}>
+                    <div key={section.name} className={sectionIdx === 0 ? 'pt-10' : 'pt-10'}>
                       <fieldset>
                         <legend className="block text-sm font-medium text-gray-900">{section.name}</legend>
                         <div className="space-y-3 pt-6">
@@ -260,7 +325,7 @@ const page = () => {
                                 name={section.name}
                                 type="radio"
                                 defaultChecked={filterData[section.id] === option.value}
-                                className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                className="h-4 w-4 border-gray-300  text-indigo-600 focus:ring-indigo-600"
                                 onChange={(e) => {
                                   setFilterDataHandler(section.id, option.value)
                                 }}
@@ -283,9 +348,11 @@ const page = () => {
 
             {/* Product grid */}
             <div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
-              {loadingJob ? <Loader /> :
-              jobs.length === 0 ? <h1 className="text-2xl font-bold tracking-tight text-gray-900">No Jobs Found, Please change filters and try again!</h1> :
-              <SearchComp jobs={jobs} />}
+                {loadingJob ? <Loader /> :
+                jobs.length === 0 ? <h1 className="text-2xl font-bold tracking-tight text-gray-900">No Jobs Found, Please change filters and try again!</h1> :
+                <SearchComp jobs={jobs} />
+                }
+                
             </div>
           </div>
         </main>

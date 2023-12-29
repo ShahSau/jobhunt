@@ -10,11 +10,12 @@ const JobHunt = ({name, data}) => {
         <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="flex items-center justify-between space-x-4">
             <h2 className="text-lg font-medium text-gray-900">{name}</h2>
-            <Link href="/search?experience=No Experience" className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
+            <Link  href={name == 'Hottest Jobs' ?"/search?min_salary=300000&max_salary=500000" : "/search?experience=No Experience"} className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
               View all {name}
               <span aria-hidden="true"> &rarr;</span>
             </Link>
           </div>
+          {console.log(name)}
           <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
             {data && data.map((job, index) => (
               <Link href={`/jobs/${job.id}`} key={index}>

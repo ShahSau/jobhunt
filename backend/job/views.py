@@ -23,7 +23,7 @@ def getAllJobs(request):
     print(filterset)
 
     # Pagination
-    resPerPage = 6
+    resPerPage = filterset.qs.count()
     paginator = PageNumberPagination()
     paginator.page_size = resPerPage
 
