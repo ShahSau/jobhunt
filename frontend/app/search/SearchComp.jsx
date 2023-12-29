@@ -3,22 +3,12 @@ import Link from 'next/link'
 import { IoLocationSharp } from "react-icons/io5";
 import { BiTimeFive } from "react-icons/bi";
 import moment from 'moment';
-
-const JobHunt = ({name, data}) => {
+const SearchComp = ({jobs}) => {
   return (
-    <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <div className="flex items-center justify-between space-x-4">
-            <h2 className="text-lg font-medium text-gray-900">{name}</h2>
-            <Link href="/search?experience=No Experience" className="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
-              View all {name}
-              <span aria-hidden="true"> &rarr;</span>
-            </Link>
-          </div>
-          <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
-            {data && data.map((job, index) => (
+    <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-3">
+            {jobs && jobs.map((job, index) => (
               <Link href={`/jobs/${job.id}`} key={index}>
-                <div key={job.id} className="ml-6 md:ml-0 group group/item singleJob w-[250px] p-[20px] bg-gray-100 rounded-[10px] hover:bg-blueColor shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
+                <div key={job.id} className="ml-6 md:ml-0 group group/item singleJob w-[250px] p-[28px] bg-gray-100 rounded-[10px] hover:bg-blueColor shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
 
                   <span className='flex justify-between items-center gap-4'>
                     <h1 className='text-[16px] font-semibold text-textColor group-hover:opacity-50'>{job.title}</h1>
@@ -45,10 +35,8 @@ const JobHunt = ({name, data}) => {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </div>
+            </div>
   )
 }
 
-export default JobHunt
+export default SearchComp

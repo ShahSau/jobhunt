@@ -30,7 +30,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
                 ))
               }
               <Link href="/search" className="flex items-center justify-center whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                View all latest jobs
+                View jobs
                 {/* <span aria-hidden="true"> &rarr;</span> */}
               </Link>
             </div>
@@ -63,7 +63,7 @@ const JobsSide = ({recentJob, remoteJob}) => {
                 ))
               }
               <Link href="/search" className="flex items-center justify-center whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                View all remote jobs
+                View all jobs
                 {/* <span aria-hidden="true"> &rarr;</span> */}
               </Link>
             </div>

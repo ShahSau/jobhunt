@@ -20,8 +20,10 @@ def getAllJobs(request):
     filterset = JobsFilter(request.GET, queryset=Job.objects.all().order_by('id'))
     count = filterset.qs.count()
 
+    print(filterset)
+
     # Pagination
-    resPerPage = 3
+    resPerPage = 6
     paginator = PageNumberPagination()
     paginator.page_size = resPerPage
 
