@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(['access']);
-
+  const [updated, setUpdated] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -143,6 +143,44 @@ export const AuthProvider = ({ children }) => {
     setError(null);
   };
 
+  // Update user
+  const updateProfile = async (
+    { firstName, lastName, email, password },
+    access_token
+  ) => {
+    try {
+      setLoading(true);
+
+      const res = await axios.put(
+        `${process.env.API_URL}/api/me/update/`,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+
+      if (res.data) {
+        setLoading(false);
+        setUpdated(true);
+        setUser(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(
+        error.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -150,6 +188,7 @@ export const AuthProvider = ({ children }) => {
         user,
         error,
         isAuthenticated,
+        updateProfile,
         login,
         register,
         logout,

@@ -1,37 +1,57 @@
 'use client'
-import React,{ useState, useContext, useEffect }  from 'react'
+import React, { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 import AuthContext from "../../../context/AuthContext";
-import { useRouter } from 'next/navigation';
-import Link from "next/link";
-const Register = () => {
+// import { toast } from "react-toastify";
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { loading, error, isAuthenticated, register, clearErrors } = useContext(AuthContext);
-    const router = useRouter();
+const UpdateProfile = ({ access_token }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        register({ firstName, lastName, email, password });
-      };
+  const router = useRouter();
 
-    useEffect(() => {
-        // if (error) {
-        // toast.error(error);
-        // clearErrors();
-        // }
+  const {
+    updated,
+    loading,
+    error,
+    user,
+    clearErrors,
+    updateProfile,
+    setUpdated,
+  } = useContext(AuthContext);
 
-        if (isAuthenticated && !loading) {
-        router.push("/");
-        }
-    }, [isAuthenticated, error, loading]);
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
+      setEmail(user.email);
+    }
+
+    if (error) {
+    //   toast.error(error);
+      clearErrors();
+    }
+
+    if (updated) {
+      setUpdated(false);
+      router.push("/myprofile");
+    }
+  }, [error, user, updated]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    updateProfile({ firstName, lastName, email, password }, access_token);
+  };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-        Sign up for an account
+        Update your profile
       </h2>
     </div>
 
@@ -120,20 +140,15 @@ const Register = () => {
             type="submit"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sign up
+            Update
           </button>
         </div>
       </form>
 
-      <p className="mt-10 text-center text-sm text-gray-500">
-        Have a account?{' '}
-        <Link href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-          Sign in
-        </Link>
-      </p>
+      
     </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default UpdateProfile;
