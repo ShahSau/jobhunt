@@ -1,0 +1,164 @@
+
+'use client';
+import axios from "axios";
+import { useState, useEffect, createContext } from "react";
+import cookie from "cookie";
+import { useRouter } from "next/navigation";
+import { useCookies } from 'react-cookie';
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [error, setError] = useState(null);
+  const [cookies, setCookie, removeCookie] = useCookies(['access']);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      loadUser();
+    }
+  }, [user, cookies.access]);
+
+  // Login user
+  const login = async ({ username, password }) => {
+    try {
+      setLoading(true);
+
+      const response = await axios.post(
+        `${process.env.API_URL}/api/token/`,
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+
+      if(response.status === 200 && response.statusText === "OK"){
+        setCookie('access', response.data.access, { path: '/', maxAge: 60 * 60 * 24 * 15 });
+      
+        loadUser();
+        setIsAuthenticated(true);
+        setLoading(false);
+        
+        router.push("/");
+      }
+        
+    } catch (error) {
+      setLoading(false);
+      setError(
+        error.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
+  // Register user
+  const register = async ({ firstName, lastName, email, password }) => {
+    try {
+      setLoading(true);
+
+      const res = await axios.post(`${process.env.API_URL}/api/register/`, {
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password,
+      });
+
+      console.log(res.data);
+
+      if (res.data.message) {
+        setLoading(false);
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error.response);
+      setLoading(false);
+      setError(
+        error.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
+  // Load user
+  const loadUser = async () => {
+    
+    const cookie = cookies.access || "";
+    if (cookie =="") {
+      return;
+    }
+    try{
+      const res= await axios.get(`${process.env.API_URL}/api/me/`, {
+        headers: {
+          Authorization: `Bearer ${cookie}`,
+        },
+      });
+      
+        setCookie('mee', res.data, { path: '/', maxAge: 60 * 60 * 24 * 15 });
+        setUser(res.data);
+        setIsAuthenticated(true);
+        setLoading(false);
+      
+    }
+    catch{
+      setLoading(false);
+      setIsAuthenticated(false);
+      setUser(null);
+      setError(
+        error?.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
+  // Logout user
+  const logout =() => {
+    try {
+      removeCookie('access');
+      setUser(null);
+      setIsAuthenticated(false);
+      router.push("/login");
+    } catch (error) {
+      setLoading(false);
+      setIsAuthenticated(false);
+      setUser(null);
+      setError(
+        error.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
+  // Clear Errors
+  const clearErrors = () => {
+    setError(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        loading,
+        user,
+        error,
+        isAuthenticated,
+        login,
+        register,
+        logout,
+        clearErrors,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthContext;

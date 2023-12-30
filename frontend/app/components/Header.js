@@ -4,8 +4,9 @@ import { FaBars, FaPlus } from "react-icons/fa";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import Link from "next/link";
-   
-              
+import React, { useContext } from "react";
+import AuthContext from "../../context/AuthContext"; 
+
 const navigation = [
     { name: 'Home', href: '/', current: true },
     { name: 'Search', href: '/search', current: false },
@@ -17,6 +18,10 @@ function classNames(...classes) {
   }
               
 const Header =()=> {
+
+  const { user, loading, logout } = useContext(AuthContext);
+
+  //console.log(user)
   return (
     <Disclosure as="nav" className="bg-gray-200">
       {({ open }) => (
@@ -66,12 +71,12 @@ const Header =()=> {
                   </button>
               
                   {/* Profile dropdown */}
-                  <Menu as="div" className="relative ml-3">
+                  {user && <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="relative flex rounded-md  text-md focus:outline-none hover:bg-gray-100 p-2">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <p>shahriar</p>
+                        <p>{user.first_name}</p>
                         {/* first name of the sign in user*/}
                       </Menu.Button>
                     </div>
@@ -128,7 +133,8 @@ const Header =()=> {
                         <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href="/signout"
+                                href="/"
+                                onClick={logout}
                                 className={classNames(active ? 'bg-gray-300' : '', 'block px-4 py-2 text-sm text-gray-700')}
                               >
                                 Sign out
@@ -137,7 +143,17 @@ const Header =()=> {
                         </Menu.Item>
                       </Menu.Items>
                     </Transition>
-                  </Menu>
+                  </Menu>}
+                  {!user && 
+                  <div className="flex space-x-4">
+                    <Link href="/login">
+                      <span className="hover:bg-gray-100 text-black rounded-md px-3 py-2 text-sm font-medium">Login</span>
+                    </Link>
+                    {/* <Link href="/register">
+                      <span className="hover:bg-gray-100 text-black rounded-md px-3 py-2 text-sm font-medium">Register</span>
+                    </Link> */}
+                  </div>
+                    }
                 </div>
             </div>
           </div>
