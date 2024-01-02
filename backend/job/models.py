@@ -1,6 +1,7 @@
 from datetime import *
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser as User
 import geocoder
 import os
 
@@ -68,7 +69,9 @@ class Job(models.Model):
     company = models.CharField(max_length=100, null=True)
     point = gismodels.PointField(default=Point(0.0, 0.0))
     lastDate = models.DateTimeField(default=return_date_time)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    # user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    
+    user  = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     remote = models.BooleanField(default=False)
 
@@ -86,12 +89,16 @@ class Job(models.Model):
 
 class CandidatesApplied(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    user  = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True)
     resume = models.CharField(max_length=200)
     appliedAt = models.DateTimeField(auto_now_add=True)
 
 class CandidatesFavorite(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    user  = models.ForeignKey('account.CustomUser', on_delete=models.SET_NULL, null=True)
     favorite= models.BooleanField(default=False)
 

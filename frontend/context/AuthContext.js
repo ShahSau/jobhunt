@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(['access']);
   const [updated, setUpdated] = useState(null);
+  const [uploaded, setUploaded] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -181,6 +182,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Upload Resume
+  const uploadResume = async (formData, access_token) => {
+    try {
+      setLoading(true);
+
+      const res = await axios.put(
+        `${process.env.API_URL}/api/upload/resume/`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+
+      if (res.data) {
+        console.log(res.data);
+        setLoading(false);
+        setUploaded(true);
+      }
+    } catch (error) {
+      console.log(error.response);
+      setLoading(false);
+      setError(
+        error.response &&
+          (error.response.data.detail || error.response.data.error)
+      );
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -193,6 +224,7 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         clearErrors,
+        uploadResume,
       }}
     >
       {children}

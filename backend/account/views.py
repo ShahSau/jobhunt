@@ -1,16 +1,17 @@
 from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 
 from django.contrib.auth.hashers import make_password
-
-from .validators import validate_file_extension
 from .serializers import SignUpSerializer, UserSerializer
 
 from rest_framework.permissions import IsAuthenticated
-
-from django.contrib.auth.models import User
+from .models import CustomUser as User
+# from django.contrib.auth.models import AbstractUser as User
 
 # Create your views here.
 
@@ -42,8 +43,7 @@ def register(request):
 
     else:
         return Response(user.errors)
-
-
+    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def currentUser(request):
@@ -52,18 +52,20 @@ def currentUser(request):
 
     return Response(user.data)
 
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateUser(request):
-    user = request.user
 
-    data = request.data    
+    user = request.user
+    data = request.data
 
     user.first_name = data['first_name']
     user.last_name = data['last_name']
     user.username = data['email']
     user.email = data['email']
+    user.cv = data['cv']
+    user.github = data['github']
+    user.linkedin = data['linkedin']
 
     if data['password'] != '':
         user.password = make_password(data['password'])
@@ -72,6 +74,7 @@ def updateUser(request):
 
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
@@ -84,10 +87,6 @@ def uploadResume(request):
     if resume == '':
         return Response({ 'error': 'Please upload your resume.' }, status=status.HTTP_400_BAD_REQUEST)
 
-    isValidFile = validate_file_extension(resume.name)
-
-    if not isValidFile:
-        return Response({ 'error': 'Please upload only pdf file.' }, status=status.HTTP_400_BAD_REQUEST)
 
     serializer = UserSerializer(user, many=False)
 
