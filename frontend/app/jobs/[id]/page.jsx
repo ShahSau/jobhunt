@@ -172,7 +172,7 @@ const page = () => {
                 <p>{job.description}</p>
             </div>
             
-            <div className='overflow:hidden w-full h-[500px]'>
+            <div className='overflow:hidden w-full h-[500px] mb-6'>
                 <Map
                     className="rounded-lg shadow-lg"
 				    mapboxAccessToken={mapboxToken}
@@ -199,7 +199,7 @@ const page = () => {
             </div>  
             {
                 !applied && !outOfDate && 
-                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4">Apply for this job</button>
+                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4 mb-6">Apply for this job</button>
             }
             </div> 
             
@@ -208,7 +208,7 @@ const page = () => {
                 <div className="employer-info mb-32 text-center ">
                 </div>
                 { !applied && !outOfDate &&
-                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job22</button>
+                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job</button>
         }
                 {!isFavourite && !outOfDate && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"

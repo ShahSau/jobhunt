@@ -26,73 +26,73 @@ const page = () => {
   return (
 
       <div className="bg-white">
-      <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
-        <div className="px-4 sm:px-0">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Favorite Jobs</h1>
-          <p className="mt-2 text-sm text-gray-500">
+        <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
+          <div className="px-4 sm:px-0">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Favorite Jobs</h1>
+            <p className="mt-2 text-sm text-gray-500">
             List of all your favorite jobs.
-          </p>
-        </div>
+            </p>
+          </div>
 
-        <div className="mt-16">
-          <h2 className="sr-only">Favorite jobs</h2>
+          <div className="mt-16">
+            <h2 className="sr-only">Favorite jobs</h2>
 
-          <div className="space-y-16 sm:space-y-24">
-            <div className="bg-gray-50 px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8">
+            <div className="space-y-16 sm:space-y-24">
+              <div className="bg-gray-50 px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8">
                   <p>You have saved {jobs.length} jobs as your favorite jobs</p>
-            </div>
+              </div>
 
               <div className="px-4 sm:px-6 lg:px-8">
-              <div className="mt-8 flow-root">
-                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <table className="min-w-full divide-y divide-gray-300">
-                      <thead>
-                        <tr>
-                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                            Title
-                          </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                            Eamil
-                          </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                            Last Date to Apply
-                          </th>
-                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                            Salary
-                          </th>
-                          <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                            <span className="sr-only">Edit</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        {jobs.map((job) => (
-                          <tr key={job.job.id}>
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                              {job.job.title}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{job.job.email}</td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{job.job.lastDate}</td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${job.job.salary}</td>
-                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                              <Link href={`/jobs/${job.job.id}`} className="text-indigo-600 hover:text-indigo-900">
-                                Details<span className="sr-only">, {job.job.title}</span>
-                              </Link>
-                            </td>
+                <div className="mt-8 flow-root">
+                  <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                      <table className="min-w-full divide-y divide-gray-300">
+                        <thead>
+                          <tr>
+                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                              Title
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                              Email
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                              Last Date to Apply
+                            </th>
+                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                              Salary
+                            </th>
+                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                              <span className="sr-only">Edit</span>
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          {jobs.map((job) => (
+                            <tr key={job.job.id}>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                {job.job.title}
+                              </td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{job.job.email}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{new Date(job.job.lastDate).toDateString()}</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${job.job.salary}</td>
+                              <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                                <Link href={`/jobs/${job.job.id}`} className="text-indigo-600 hover:text-indigo-900">
+                                  Details<span className="sr-only">, {job.job.title}</span>
+                                </Link>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
+            
             </div>
-            {/* ))} */}
           </div>
         </div>
       </div>
-    </div>
   )
 }
 
