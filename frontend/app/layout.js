@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import ToasterProvider from './providers/ToasterProvider';
 import ClientOnly from './components/ClientsOnly';
 import {AuthProvider} from '../context/AuthContext'
+import {JobProvider} from '../context/JobContext'
 import { CookiesProvider } from "react-cookie";
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,12 +20,14 @@ export default function RootLayout({ children }) {
     <html lang="en" className='overflow-x-hidden'>
       <body className={inter.className}>
         <AuthProvider>
-          <CookiesProvider>
-            <ToasterProvider />
-            <Header />
-            {children}
-            <Footer />
-          </CookiesProvider>
+          <JobProvider>
+            <CookiesProvider>
+              <ToasterProvider />
+              <Header />
+               {children}
+              <Footer />
+            </CookiesProvider>
+          </JobProvider>
         </AuthProvider>
       </body>
     </html>

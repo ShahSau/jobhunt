@@ -1,10 +1,10 @@
 'use client'
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import axios from "axios";
 import AuthContext from "../../../context/AuthContext";
 import Loader from "../Loader";
+import Link from "next/link";
 
 // import { toast } from "react-toastify";
 
@@ -209,7 +209,7 @@ const UpdateProfile = ({ access_token }) => {
 
         <div>
           <label htmlFor="cv" className="block text-sm font-medium leading-6 text-gray-900">
-            Upload CV
+            Upload CV (please upload only jpg, png, jpeg)
           </label>
           <div className="mt-2">
             <input
@@ -218,12 +218,32 @@ const UpdateProfile = ({ access_token }) => {
               type="file"
               placeholder="Upload CV"
               onChange={onChange}
-              accept="application/pdf"
+              accept="application/jpg, application/png, application/jpeg"
               required
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
+        {cv && (
+                <>
+                  <h4 className="text-center my-3">OR</h4>
+
+                  <Link
+                    href={`${cv}`}
+                    download={`${cv}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <div
+                      className="text-success text-center ml-4"
+                    >
+                      <b>
+                       Download Your Resume
+                      </b>
+                    </div>
+                  </Link>
+                </>
+              )}
 
         <div>
           <button
