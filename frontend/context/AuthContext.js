@@ -146,7 +146,7 @@ export const AuthProvider = ({ children }) => {
 
   // Update user
   const updateProfile = async (
-    { firstName, lastName, email, password },
+    { firstName, lastName, email, password, cv, github, linkedin },
     access_token
   ) => {
     try {
@@ -159,6 +159,10 @@ export const AuthProvider = ({ children }) => {
           last_name: lastName,
           email,
           password,
+          cv,
+          github,
+          linkedin,
+            
         },
         {
           headers: {
