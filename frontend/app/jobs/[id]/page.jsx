@@ -3,7 +3,7 @@
 import axios from 'axios'
 import moment from 'moment';
 import { useParams, useRouter } from 'next/navigation'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { FaArrowLeft } from "react-icons/fa";
 import Loader from '../../components/Loader';
 import Link from 'next/link';
@@ -12,6 +12,9 @@ import Map, {Marker,NavigationControl, GeolocateControl} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from '../../not-found';
 import { useCookies } from 'react-cookie';
+import JobContext from '../../../context/JobContext';
+
+
 const page = () => {
     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
     const router = useRouter()
@@ -20,9 +23,13 @@ const page = () => {
     const [candidates, setCandidates] = useState(0)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-    const [cookies, setCookie, removeCookie] = useCookies(['access']);
+    const [cookies] = useCookies(['access']);
     const accessToken = cookies.access
     const [isFavourite, setIsFavourite] = useState(false)
+    const [outOfDate, setOutOfDate] = useState(false)
+
+    const { applyToJob, checkJobApplied, applied, clearErrors } =
+    useContext(JobContext);
 
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -41,7 +48,20 @@ const page = () => {
             setError(true)
             setLoading(false)
         })
+
+        checkJobApplied(id, accessToken)
+        const d1 = moment(job.lastDate);
+        const d2 = moment(Date.now());
+        const diff = d1.diff(d2, 'days');
+        if(diff < 0){
+            setOutOfDate(true)
+        }
+        
     }, [])
+
+    const applyToJobHandler = () => {
+        applyToJob(id, accessToken);
+      };
 
     const handleFavourite = () => {
         let config = {
@@ -112,13 +132,21 @@ const page = () => {
             {/* hidden only in medium or bigger screen*/}
             
             <div className="admin-controls block md:hidden text-sm mb-4 border-t border-b py-2">
-                {!isFavourite && <button 
+            {applied && 
+                <p className='text-md text-green-600 mb-6'>
+                    You have already applied for this job.
+                </p>}
+                {outOfDate &&
+                <p className='text-md text-red-600 mb-6'>
+                    This job is out of date.
+                </p>}
+                {!isFavourite  && !outOfDate && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite && <button 
+                {isFavourite  && !outOfDate && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
@@ -169,27 +197,39 @@ const page = () => {
                     </Marker>
                 </Map>
             </div>  
-            
-            <Link href="#" className="bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4">Apply for this job</Link>
+            {
+                !applied && !outOfDate && 
+                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4">Apply for this job</button>
+            }
             </div> 
             
             {/* visible only in medium or bigger screen*/}
             <div className="w-full hidden  md:block md:w-3/12">
                 <div className="employer-info mb-32 text-center ">
                 </div>
-                <Link href="#" className="bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job22</Link>
-                {!isFavourite && <button 
+                { !applied && !outOfDate &&
+                <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job22</button>
+        }
+                {!isFavourite && !outOfDate && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite && <button 
+                {isFavourite && !outOfDate && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Remove from favourite
                 </button>}
+                {applied && 
+                <p className='w-full bg-indigo-200 text-green-600 mb-6'>
+                    You have already applied for this job.
+                </p>}
+                {outOfDate &&
+                <p className='w-full bg-indigo-200 text-red-600 mb-6'>
+                    This job is out of date.
+                </p>}
         
                 <div className="admin-controls text-center text-sm border-gray-300 border-2">
                     {/* <h5 className="text-gray-700 mb-2 ">Info</h5> */}
