@@ -11,7 +11,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import Map, {Marker,NavigationControl, GeolocateControl} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from '../../not-found';
-
+import { useCookies } from 'react-cookie';
 const page = () => {
     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
     const router = useRouter()
@@ -20,12 +20,13 @@ const page = () => {
     const [candidates, setCandidates] = useState(0)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [cookies, setCookie, removeCookie] = useCookies(['access']);
+    const accessToken = cookies.access
+    const [isFavourite, setIsFavourite] = useState(false)
 
     const config = {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA0NTMyODAxLCJpYXQiOjE3MDMyMzY4MDEsImp0aSI6IjE0NmRiYzg5MTk1MDRlMWU4MjU0YjgzOGZlYjBlZDg2IiwidXNlcl9pZCI6Mn0._6lsfTSFU-MmBc1TiaVphLI53qF8Mw3gjZaxHuFLwyI` }
+        headers: { Authorization: `Bearer ${accessToken}` }
       };
-
-    
 
     useEffect(() => {
         axios.get(`${process.env.API_URL}/api/jobs/${id}/`, config)
@@ -41,6 +42,44 @@ const page = () => {
             setLoading(false)
         })
     }, [])
+
+    const handleFavourite = () => {
+        let config = {
+            method: 'post',
+            url: `${process.env.API_URL}/api/jobs/${id}/favorite/`,
+            headers: { 
+              'Authorization': `Bearer ${accessToken}`,
+            }
+          };
+          axios.request(config)
+            .then((response) => {
+                const res =response.data;
+                console.log(res.favorite)
+                if(res.favorite === true){
+                    setIsFavourite(true)
+                }
+                if(res.favorite === false){
+                    setIsFavourite(false)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        axios.get(`${process.env.API_URL}/api/me/jobs/favorites/`, config)
+        .then(res => {
+            if(res.data.length !== 0){
+                res.data.map(job => {
+                    if(job.job.id === Number(id)){
+                        setIsFavourite(true)
+                    }
+                })
+            }
+        })
+    }, [isFavourite])
+
 
 
   return (
@@ -71,7 +110,20 @@ const page = () => {
             
             <br />
             {/* hidden only in medium or bigger screen*/}
+            
             <div className="admin-controls block md:hidden text-sm mb-4 border-t border-b py-2">
+                {!isFavourite && <button 
+                    className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
+                    onClick={handleFavourite }
+                >
+                    Save to favourite
+                </button>}
+                {isFavourite && <button 
+                    className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
+                    onClick={handleFavourite }
+                >
+                    Remove from favourite
+                </button>}
                 <div className="controls">
                         <div className='gap-1 text-sm p-2'>
                             Apply Before : {moment(job.createdAt).add(5, 'M').format('MMMM Do YYYY')}
@@ -125,7 +177,19 @@ const page = () => {
             <div className="w-full hidden  md:block md:w-3/12">
                 <div className="employer-info mb-32 text-center ">
                 </div>
-                <Link href="#" className="bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job</Link>
+                <Link href="#" className="bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job22</Link>
+                {!isFavourite && <button 
+                    className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
+                    onClick={handleFavourite }
+                >
+                    Save to favourite
+                </button>}
+                {isFavourite && <button 
+                    className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
+                    onClick={handleFavourite }
+                >
+                    Remove from favourite
+                </button>}
         
                 <div className="admin-controls text-center text-sm border-gray-300 border-2">
                     {/* <h5 className="text-gray-700 mb-2 ">Info</h5> */}

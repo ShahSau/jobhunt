@@ -2,12 +2,15 @@
 
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import { useCookies } from 'react-cookie';
+import Link from 'next/link';
 
 const page = () => {
     const [jobs, setJobs] = useState([])
-
+    const [cookies, setCookie, removeCookie] = useCookies(['access']);
+    const accessToken = cookies.access
     const config = {
-      headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA0NTMyODAxLCJpYXQiOjE3MDMyMzY4MDEsImp0aSI6IjE0NmRiYzg5MTk1MDRlMWU4MjU0YjgzOGZlYjBlZDg2IiwidXNlcl9pZCI6Mn0._6lsfTSFU-MmBc1TiaVphLI53qF8Mw3gjZaxHuFLwyI` }
+      headers: { Authorization: `Bearer ${accessToken}` }
     };
 
     useEffect(() => {
@@ -20,7 +23,6 @@ const page = () => {
         })
     }
     , [])
-    console.log(jobs)
   return (
 
       <div className="bg-white">
@@ -33,42 +35,60 @@ const page = () => {
         </div>
 
         <div className="mt-16">
-          <h2 className="sr-only">Recent orders</h2>
+          <h2 className="sr-only">Favorite jobs</h2>
 
           <div className="space-y-16 sm:space-y-24">
             <div className="bg-gray-50 px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8">
                   <p>You have saved {jobs.length} jobs as your favorite jobs</p>
             </div>
-            {jobs.map((jobs,index) => (
-              <div key={index}>
-                <div className="mt-6 flow-root px-4 sm:mt-10 sm:px-0 bg-gray-100">
-                  <div className="-my-6 divide-y divide-gray-700 sm:-my-10">
-                      <div key={jobs.job.id} className="flex py-6 sm:py-10">
-                        <div className="min-w-0 flex-1 lg:flex lg:flex-col">
-                          <div className="lg:flex-1">
-                            <div className="sm:flex">
-                              <div>
-                                <h4 className="font-medium text-gray-900">{jobs.job.title}</h4>
-                                <p className="mt-2 hidden text-sm text-gray-500 sm:block">{jobs.job.description}</p>
-                              </div>
-                            </div>
-                            <div className="mt-2 flex text-sm font-medium sm:mt-4">
-                              <a href={`/jobs/${jobs.job.id}`} className="text-indigo-600 hover:text-indigo-500">
-                                View job details
-                              </a>
-                              <div className="ml-4 border-l border-gray-200 pl-4 sm:ml-6 sm:pl-6">
-                                <a href={`jobs/${jobs.job.id}/favorite/`} className="text-indigo-600 hover:text-indigo-500">
-                                  Remove from favorites
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
+              <div className="px-4 sm:px-6 lg:px-8">
+              <div className="mt-8 flow-root">
+                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    <table className="min-w-full divide-y divide-gray-300">
+                      <thead>
+                        <tr>
+                          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                            Title
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            Eamil
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            Last Date to Apply
+                          </th>
+                          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                            Salary
+                          </th>
+                          <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                            <span className="sr-only">Edit</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {jobs.map((job) => (
+                          <tr key={job.job.id}>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                              {job.job.title}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{job.job.email}</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{job.job.lastDate}</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${job.job.salary}</td>
+                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                              <Link href={`/jobs/${job.job.id}`} className="text-indigo-600 hover:text-indigo-900">
+                                Details<span className="sr-only">, {job.job.title}</span>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+            {/* ))} */}
           </div>
         </div>
       </div>
