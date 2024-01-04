@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 
 const page = () => {
-  const [jobs, setJobs] = useState([])
+    const [jobs, setJobs] = useState([])
     const [cookies, setCookie, removeCookie] = useCookies(['access']);
     const accessToken = cookies.access
     const config = {
@@ -96,7 +96,7 @@ const page = () => {
             </div>
           </div>
         </div>
-      </div>
+    </div>
   )
 }
 

@@ -62,13 +62,13 @@ const Header =()=> {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
+                  {/* <button
                     type="button"
                     className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                   >
                     <FaPlus className="-ml-0.5 h-5 w-5" aria-hidden="true" />
                       New Job
-                  </button>
+                  </button> */}
               
                   {/* Profile dropdown */}
                   {user && <Menu as="div" className="relative ml-3">
@@ -123,7 +123,7 @@ const Header =()=> {
                         <Menu.Item>
                           {({ active }) => (
                             <Link
-                              href="/currentjobs"
+                              href="/employerjobs"
                               className={classNames(active ? 'bg-gray-300' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Current Jobs

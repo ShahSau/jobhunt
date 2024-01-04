@@ -76,6 +76,7 @@ def updateJob(request, pk):
     job.salary = request.data['salary']
     job.positions = request.data['positions']
     job.company = request.data['company']
+    job.remote = request.data['remote']
 
     job.save()
 
