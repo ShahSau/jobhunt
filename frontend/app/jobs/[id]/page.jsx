@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation'
 import React, {useState, useEffect, useContext} from 'react'
 import { FaArrowLeft } from "react-icons/fa";
 import Loader from '../../components/Loader';
-import Link from 'next/link';
 import { IoLocationSharp } from "react-icons/io5";
 import Map, {Marker,NavigationControl, GeolocateControl} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -61,6 +60,7 @@ const page = () => {
 
     const applyToJobHandler = () => {
         applyToJob(id, accessToken);
+        router.push('/applied')
       };
 
     const handleFavourite = () => {

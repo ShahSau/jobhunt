@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [updated, setUpdated] = useState(null);
   const [uploaded, setUploaded] = useState(null);
   const router = useRouter();
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     if (!user) {
@@ -215,6 +216,7 @@ export const AuthProvider = ({ children }) => {
       );
     }
   };
+  
 
   return (
     <AuthContext.Provider

@@ -125,7 +125,7 @@ const page = () => {
                                 <Link href={`/jobs/${job.id}`} className="text-indigo-500 hover:text-indigo-900 m-2">
                                   <FaEye /><span className="sr-only">, {job.title}</span>
                                 </Link>
-                                <Link href={`/jobs/${job.id}`} className="text-indigo-500 hover:text-indigo-900 m-2">
+                                <Link href={`/employerjobs/candidates/${job.id}`} className="text-indigo-500 hover:text-indigo-900 m-2">
                                   <FaUser /><span className="sr-only">, {job.title}</span>
                                 </Link>
                                 <Link href={`/employerjobs/jobs/${job.id}`} className="text-indigo-500 hover:text-indigo-900 m-2">
