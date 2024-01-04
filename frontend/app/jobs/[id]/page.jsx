@@ -12,6 +12,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import NotFound from '../../not-found';
 import { useCookies } from 'react-cookie';
 import JobContext from '../../../context/JobContext';
+import AuthContext from '../../../context/AuthContext';
+import Link from 'next/link';
 
 
 const page = () => {
@@ -29,6 +31,7 @@ const page = () => {
 
     const { applyToJob, checkJobApplied, applied, clearErrors } =
     useContext(JobContext);
+    const { user } = useContext(AuthContext);
 
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -101,7 +104,6 @@ const page = () => {
     }, [isFavourite])
 
 
-
   return (
     <>
         {loading ? <Loader /> : error ? <NotFound /> :
@@ -132,26 +134,29 @@ const page = () => {
             {/* hidden only in medium or bigger screen*/}
             
             <div className="admin-controls block md:hidden text-sm mb-4 border-t border-b py-2">
-            {applied && 
+                {applied && user.id !== job.user &&
                 <p className='text-md text-green-600 mb-6'>
                     You have already applied for this job.
                 </p>}
-                {outOfDate &&
+                {outOfDate && user.id !== job.user &&
                 <p className='text-md text-red-600 mb-6'>
                     This job is out of date.
                 </p>}
-                {!isFavourite  && !outOfDate && <button 
+                {!isFavourite  && !outOfDate && user.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite  && !outOfDate && <button 
+                {isFavourite  && !outOfDate && user.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Remove from favourite
                 </button>}
+                { !applied && !outOfDate && user?.cv =='' && user.id !== job.user &&
+                <p className='mb-6 border-b-2'>Please upload your Cv from <Link href={`/myprofile`} className='text-indigo-500'>My profile </Link>page to apply to this job</p>
+                }
                 <div className="controls">
                         <div className='gap-1 text-sm p-2'>
                             Apply Before : {moment(job.createdAt).add(5, 'M').format('MMMM Do YYYY')}
@@ -198,25 +203,29 @@ const page = () => {
                 </Map>
             </div>  
             {
-                !applied && !outOfDate && 
+                !applied && !outOfDate && user?.cv !=='' && user.id !== job.user &&
                 <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4 mb-6">Apply for this job</button>
             }
+            
             </div> 
             
             {/* visible only in medium or bigger screen*/}
             <div className="w-full hidden  md:block md:w-3/12">
                 <div className="employer-info mb-32 text-center ">
                 </div>
-                { !applied && !outOfDate &&
+                { !applied && !outOfDate && user?.cv !=='' && user.id !== job.user &&
                 <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job</button>
-        }
-                {!isFavourite && !outOfDate && <button 
+                }
+                { !applied && !outOfDate && user?.cv =='' && user.id !== job.user &&
+                <p>Please upload your Cv from <Link href={`/myprofile`} className='text-indigo-500'>My profile </Link>page to apply to this job</p>
+                }
+                {!isFavourite && !outOfDate && user.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite && !outOfDate && <button 
+                {isFavourite && !outOfDate && user.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
