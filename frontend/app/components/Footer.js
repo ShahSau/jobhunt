@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-
+import { useTheme } from "../../context/ThemeProvider";
 
 const navigation = {
     main: [
@@ -35,13 +35,14 @@ const navigation = {
   }
   
 const Footer = ()=> {
+    const { theme } = useTheme();
     return (
-      <footer className="bg-gray-200">
+      <footer className={`${theme=== 'light'? 'bg-gray-200 text-black' : 'bg-gray-600 text-white'}`}>
         <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
           <nav className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
             {navigation.main.map((item) => (
               <div key={item.name} className="pb-6">
-                <Link href={item.href} className="text-sm leading-6 rounded-md p-2 hover:bg-gray-100 text-black hover:text-gray-900">
+                <Link href={item.href} className="text-sm leading-6 rounded-md p-2 hover:bg-gray-100  hover:text-gray-900">
                   {item.name}
                 </Link>
               </div>
@@ -49,13 +50,13 @@ const Footer = ()=> {
           </nav>
           <div className="mt-10 flex justify-center space-x-10">
             {navigation.social.map((item) => (
-              <Link key={item.name} href={item.href} className="text-black hover:text-gray-500">
+              <Link key={item.name} href={item.href} className="hover:text-gray-500">
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
               </Link>
             ))}
           </div>
-        <p className="mt-10 text-center text-xs leading-5 text-black">
+        <p className="mt-10 text-center text-xs leading-5">
             &copy; {new Date().getFullYear()} JobHunt, Inc. All rights reserved.
         </p>
         </div>

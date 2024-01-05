@@ -8,17 +8,16 @@ import ClientOnly from './components/ClientsOnly';
 import {AuthProvider} from '../context/AuthContext'
 import {JobProvider} from '../context/JobContext'
 import { CookiesProvider } from "react-cookie";
+import {ThemeProvider} from '../context/ThemeProvider'
 const inter = Inter({ subsets: ['latin'] })
 
-// export const metadata = {
-//   title: 'Job Search App',
-//   description: 'Job Search App built with Next.js and Django',
-// }
+
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className='overflow-x-hidden'>
       <body className={inter.className}>
+      <ThemeProvider theme="light">
         <AuthProvider>
           <JobProvider>
             <CookiesProvider>
@@ -29,6 +28,7 @@ export default function RootLayout({ children }) {
             </CookiesProvider>
           </JobProvider>
         </AuthProvider>
+      </ThemeProvider>
       </body>
     </html>
   )

@@ -6,6 +6,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import Link from "next/link";
 import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext"; 
+import ThemeSwitch from "./ThemeSwitch";
+import { useTheme } from "../../context/ThemeProvider";
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -20,17 +22,18 @@ function classNames(...classes) {
 const Header =()=> {
 
   const { user, loading, logout } = useContext(AuthContext);
+  const { theme } = useTheme();
 
   //console.log(user)
   return (
-    <Disclosure as="nav" className="bg-gray-200">
+    <Disclosure as="nav" className={`${theme === 'light' ?'bg-gray-200 text-black' : 'bg-gray-900 text-white' }`}>
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2  hover:bg-gray-100 text-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className={`relative inline-flex items-center justify-center rounded-md p-2  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ${theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-700'}`}>
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                         {open ? (
@@ -42,7 +45,7 @@ const Header =()=> {
               </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="sm:flex flex-shrink-0 items-center hidden ">
-                    <p className="text-black text-lg font-bold">Job Hunt</p>
+                    <p className="text-lg font-bold">Job Hunt</p>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
@@ -51,7 +54,7 @@ const Header =()=> {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            'hover:bg-gray-100 text-black',
+                            `${theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-700'}`,
                               'rounded-md px-3 py-2 text-sm font-medium'
                           )}
                         >
@@ -62,22 +65,15 @@ const Header =()=> {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {/* <button
-                    type="button"
-                    className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                  >
-                    <FaPlus className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                      New Job
-                  </button> */}
+                  <ThemeSwitch />
               
                   {/* Profile dropdown */}
                   {user && <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-md  text-md focus:outline-none hover:bg-gray-100 p-2">
+                      <Menu.Button className={`relative flex rounded-md  text-md focus:outline-none ${theme === 'light'? 'hover:bg-gray-300' : 'hover:bg-gray-700'} p-2`}>
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <p>{user.first_name}</p>
-                        {/* first name of the sign in user*/}
                       </Menu.Button>
                     </div>
                     <Transition
@@ -147,11 +143,8 @@ const Header =()=> {
                   {!user && 
                   <div className="flex space-x-4">
                     <Link href="/login">
-                      <span className="hover:bg-gray-100 text-black rounded-md px-3 py-2 text-sm font-medium">Login</span>
+                      <span className="hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-medium">Login</span>
                     </Link>
-                    {/* <Link href="/register">
-                      <span className="hover:bg-gray-100 text-black rounded-md px-3 py-2 text-sm font-medium">Register</span>
-                    </Link> */}
                   </div>
                     }
                 </div>
@@ -165,7 +158,7 @@ const Header =()=> {
                   <Disclosure.Button
                     key={item.name}
                       className={classNames(
-                        ' hover:bg-gray-100 text-black',
+                        `${theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-700'}`,
                         'block rounded-md px-3 py-2 text-base font-medium'
                       )}
                   >
