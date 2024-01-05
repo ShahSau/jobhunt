@@ -4,12 +4,16 @@ import UpdateProfile from '../components/user/UpdateProfile'
 import { isAuthenticatedUser } from '../utils/isAuthenticated'
 import { useCookies } from 'react-cookie';
 import axios from "axios";
+import Loader from '../components/Loader';
+
 const page = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['access']);
     const[isAuthenticated,setIsAuthenticated] = useState(false)
+    const[loading,setLoading] = useState(false)
     const access_token = cookies.access;
     
     useEffect(() => {
+        setLoading(true)
         if(access_token){
             axios.post(
                 `${process.env.API_URL}/api/token/verify/`,
@@ -19,9 +23,11 @@ const page = () => {
               ).then((response)=>{
                 if (response.status === 200) {
                     setIsAuthenticated(true)
+                    setLoading(false)
                 }
                 else{
                     setIsAuthenticated(false)
+                    setLoading(false)
                 }
               }).catch((error)=>{
                 setIsAuthenticated(false)
@@ -30,6 +36,7 @@ const page = () => {
     }, [access_token])
     return (
         <>
+            {loading && <Loader />}
             {isAuthenticated && <UpdateProfile access_token={access_token}/>}
         </>
     )

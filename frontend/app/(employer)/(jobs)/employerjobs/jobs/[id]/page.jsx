@@ -5,12 +5,13 @@ import axios from 'axios'
 import { useCookies } from 'react-cookie';
 import { useParams } from 'next/navigation'
 import UpdateJob from '../../../../../components/UpdateJob'
-
+import Loader from '../../../../../components/Loader';
 const page = () => {
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])
     const accessToken = cookies.access
     const { id } = useParams()
+    const [loading, setLoading] = useState(false);
     
 
     const config = {
@@ -18,18 +19,25 @@ const page = () => {
       };
 
     useEffect(() => {
+        setLoading(true)
         axios.get(`${process.env.API_URL}/api/jobs/${id}/`, config)
         .then(res => {
             setJob(res.data.job)
+            setLoading(false)
         })
         .catch(err => {
             console.log(err)
+            setLoading(false)
         })
 
     }, [])
 
     return (
-        job.length !==0 && <UpdateJob job={job} id={id} accessToken={accessToken} />
+        <>
+        {loading && <Loader />}
+        {!loading && job.length !==0 && <UpdateJob job={job} id={id} accessToken={accessToken} />}
+        </>
+        
     )
 }
 

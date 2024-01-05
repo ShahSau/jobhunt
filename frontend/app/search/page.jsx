@@ -8,7 +8,6 @@ import axios from 'axios';
 import SearchComp from './SearchComp'
 import Loader from '../components/Loader'
 import { useSearchParams } from 'next/navigation'
-import Pagination from 'react-js-pagination'
 
 const filters = [
   {

@@ -6,19 +6,17 @@ import { useCookies } from 'react-cookie';
 import { useParams, useRouter } from 'next/navigation'
 import React, {useState, useEffect, useContext, use} from 'react'
 import Link from 'next/link';
+import Loader from '../../../../../components/Loader';
 
-const people = [
-    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    // More people...
-  ]
+
 
 const page = () => {
     const [cookies] = useCookies(['access']);
     const accessToken = cookies.access
-    const router = useRouter()
     const { id } = useParams()
     const [data, setData] = useState([])
     const [allusers, setAllusers] = useState([])
+    const [loading, setLoading] = useState(false);
 
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -36,6 +34,7 @@ const page = () => {
     , [])
 
     useEffect(() => {
+        setLoading(true)
         axios.get(`${process.env.API_URL}/api/job/${id}/candidates/`, config)
         .then((res) => {
             res.data.map((item) => {
@@ -46,9 +45,11 @@ const page = () => {
                 })
             })
             setData(res.data)
+            setLoading(false)
         })
         .catch((err) => {
             console.log(err)
+            setLoading(false)
         })
 
     }
@@ -57,7 +58,9 @@ const page = () => {
 
     
   return (
-    <div className="px-4 sm:px-6 lg:px-8 h-screen">
+    <>
+    {loading && <Loader />}
+    {!loading &&<div className="px-4 sm:px-6 lg:px-8 h-screen">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">Users</h1>
@@ -122,7 +125,8 @@ const page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>}
+    </>
   )
 }
 

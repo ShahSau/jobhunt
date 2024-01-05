@@ -11,6 +11,8 @@ import { MdDelete } from "react-icons/md";
 import { FaUser, FaEye } from "react-icons/fa";
 import JobContext from '../../../../context/JobContext';
 import { FaPlus } from "react-icons/fa";
+import Loader from '../../../components/Loader';
+
 
 const page = () => {
   const [cookies] = useCookies(['access']);
@@ -18,9 +20,9 @@ const page = () => {
   const accessToken = cookies.access
   const user = isAuthenticatedUser(accessToken)
   const router = useRouter();
-  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
 
-  const { clearErrors, error, loading, deleted, deleteJob, setDeleted } =
+  const { clearErrors, error, deleted, deleteJob, setDeleted } =
     useContext(JobContext);
 
   if(!user) {
@@ -32,12 +34,15 @@ const page = () => {
   };
 
   useEffect(() => {
+    setLoading(true)
     axios.get(`${process.env.API_URL}/api/me/jobs/`, config)
     .then(res => {
         setJobs(res.data)
+        setLoading(false)
     })
     .catch(err => {
         console.log(err)
+        setLoading(false)
     })
   }
   , [deleted])
@@ -47,7 +52,9 @@ const page = () => {
   }
 
   return (
-    <div className="bg-white">
+    <>
+      {loading && <Loader />}
+      {!loading && <div className="bg-white">
         <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
             <div className="px-4 sm:px-0">
               <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Advertized Jobs</h1>
@@ -147,7 +154,8 @@ const page = () => {
             </div>
           </div>
         </div>
-    </div>
+      </div>}
+    </>
   )
 }
 

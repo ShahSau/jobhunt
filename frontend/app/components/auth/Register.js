@@ -18,10 +18,6 @@ const Register = () => {
       };
 
     useEffect(() => {
-        // if (error) {
-        // toast.error(error);
-        // clearErrors();
-        // }
 
         if (isAuthenticated && !loading) {
         router.push("/");

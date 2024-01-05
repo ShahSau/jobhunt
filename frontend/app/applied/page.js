@@ -4,28 +4,35 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
+import Loader from '../components/Loader';
+
 
 const page = () => {
     const [jobs, setJobs] = useState([])
     const [cookies, setCookie, removeCookie] = useCookies(['access']);
     const accessToken = cookies.access
+    const [loading, setLoading] = useState(false)
     const config = {
       headers: { Authorization: `Bearer ${accessToken}` }
     };
 
     useEffect(() => {
+        setLoading(true)
         axios.get(`${process.env.API_URL}/api/me/jobs/applied/`, config)
         .then(res => {
             setJobs(res.data)
+            setLoading(false)
         })
         .catch(err => {
             console.log(err)
+            setLoading(false)
         })
     }
     , [])
-    console.log(jobs)
   return (
-    <div className="bg-white">
+    <>
+    {loading && <Loader />}
+    {!loading &&<div className="bg-white">
         <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
           <div className="px-4 sm:px-0">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Applied Jobs</h1>
@@ -96,7 +103,8 @@ const page = () => {
             </div>
           </div>
         </div>
-    </div>
+    </div>}
+    </>
   )
 }
 
