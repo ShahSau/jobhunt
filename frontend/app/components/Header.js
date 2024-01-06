@@ -143,7 +143,7 @@ const Header =()=> {
                   {!user && 
                   <div className="flex space-x-4">
                     <Link href="/login">
-                      <span className="hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-medium">Login</span>
+                      <span className={`rounded-md px-3 py-2 text-sm font-medium ${theme === 'light' ? 'hover:bg-gray-100' : 'hover:bg-gray-700'}`}>Login</span>
                     </Link>
                   </div>
                     }
