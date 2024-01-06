@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie';
 import { useParams } from 'next/navigation'
 import UpdateJob from '../../../../../components/UpdateJob'
 import Loader from '../../../../../components/Loader';
+
 const page = () => {
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])

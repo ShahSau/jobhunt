@@ -8,6 +8,7 @@ import axios from 'axios';
 import SearchComp from './SearchComp'
 import Loader from '../components/Loader'
 import { useSearchParams } from 'next/navigation'
+import { useTheme } from '../../context/ThemeProvider';
 
 const filters = [
   {
@@ -59,6 +60,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 const page = () => {
+    const {theme} = useTheme()
     const [jobs, setJobs] = useState([])
     const [loadingJob, setLoadingJob] = useState(true)
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -133,7 +135,7 @@ const page = () => {
   }, [])
 
   return (
-    <div className="bg-">
+    <div className={`${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -147,7 +149,7 @@ const page = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
+              <div className="fixed inset-0 bg-opacity-25" />
             </Transition.Child>
 
             <div className="fixed inset-0 z-40 flex">
@@ -160,12 +162,12 @@ const page = () => {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+                <Dialog.Panel className={`relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto py-4 pb-6 shadow-xl ${theme === 'light'? 'bg-gray-200 text-black':'bg-gray-900 text-white'}`}>
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                    <h2 className="text-lg font-medium">Filters</h2>
                     <button
                       type="button"
-                      className="-mr-2 flex h-10 w-10 items-center justify-center p-2 text-gray-400 hover:text-gray-500"
+                      className="-mr-2 flex h-10 w-10 items-center justify-center p-2"
                       onClick={() => setMobileFiltersOpen(false)}
                     >
                       <span className="sr-only">Close menu</span>
@@ -186,7 +188,7 @@ const page = () => {
                         type="keyword"
                         name="keyword"
                         id="keyword"
-                        className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                        className="block w-full placeholder:text-black rounded-md shadow-sm focus:ring-indigo-500"
                         placeholder="keyword"
                         onChange={(e) => {
                           setKeyword(e.target.value)
@@ -198,7 +200,7 @@ const page = () => {
                           type="location"
                           name="location"
                           id="location"
-                          className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                          className="block w-full placeholder:text-black  rounded-md shadow-sm focus:ring-indigo-500"
                           placeholder="location"
                           onChange={(e) => {
                             setLocation(e.target.value)
@@ -210,8 +212,8 @@ const page = () => {
                         {({ open }) => (
                           <fieldset>
                             <legend className="w-full px-2">
-                              <Disclosure.Button className="flex w-full items-center justify-between p-2 text-gray-400 hover:text-gray-500">
-                                <span className="text-sm font-medium text-gray-900">{section.name}</span>
+                              <Disclosure.Button className="flex w-full items-center justify-between p-2">
+                                <span className="text-sm font-medium">{section.name}</span>
                                 <span className="ml-6 flex h-7 items-center">
                                   <HiChevronDown
                                     className={classNames(open ? '-rotate-180' : 'rotate-0', 'h-5 w-5 transform')}
@@ -240,7 +242,6 @@ const page = () => {
                                     >
                                       {option.label}
                                     </label>
-                                    {console.log(section.id)}
                                   </div>
                                 ))}
                               </div>
@@ -261,7 +262,7 @@ const page = () => {
 
         <main className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="border-b border-gray-200 pb-10">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Jobs</h1>
+            <h1 className="text-4xl font-bold tracking-tight">All Jobs</h1>
             <p className="mt-4 text-base text-gray-500">
               Checkout out the best opportunities for you in the market.
             </p>
@@ -281,7 +282,7 @@ const page = () => {
               </button>
 
               <div className="hidden lg:block">
-                <form className="space-y-10 divide-y divide-gray-200"
+                <form className={ `space-y-10 divide-y divide-gray-200 ${theme === 'light' ? 'divide-gray-700' : 'divide-gray-200'}`}
                   onSubmit={(e) => {
                     e.preventDefault()
                     formSubmitHandler()
@@ -292,7 +293,7 @@ const page = () => {
                       type="keyword"
                       name="keyword"
                       id="keyword"
-                      className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                      className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 placeholder:text-black"
                       placeholder="keyword"
                       onChange={(e) => {
                         setKeyword(e.target.value)
@@ -304,7 +305,7 @@ const page = () => {
                       type="location"
                       name="location"
                       id="location"
-                      className="block w-full  rounded-md shadow-sm focus:ring-indigo-500 text-gray-900"
+                      className="block w-full placeholder:text-black rounded-md shadow-sm focus:ring-indigo-500"
                       placeholder="location"
                       onChange={(e) => {
                         setLocation(e.target.value)
@@ -315,7 +316,7 @@ const page = () => {
                   {filters.map((section, sectionIdx) => (
                     <div key={section.name} className={sectionIdx === 0 ? 'pt-10' : 'pt-10'}>
                       <fieldset>
-                        <legend className="block text-sm font-medium text-gray-900">{section.name}</legend>
+                        <legend className="block text-sm font-medium">{section.name}</legend>
                         <div className="space-y-3 pt-6">
                           {section.options.map((option, optionIdx) => (
                             <div key={option.value} className="flex items-center">
@@ -329,7 +330,7 @@ const page = () => {
                                   setFilterDataHandler(section.id, option.value)
                                 }}
                               />
-                              <label htmlFor={`${section.id}-${optionIdx}`} className="ml-3 text-sm text-gray-600">
+                              <label htmlFor={`${section.id}-${optionIdx}`} className={`ml-3 text-sm ${theme === 'light'? 'text-gray-600':'text-gray-200'}`}>
                                 {option.label}
                               </label>
                             </div>
@@ -348,7 +349,7 @@ const page = () => {
             {/* Product grid */}
             <div className="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
                 {loadingJob ? <Loader /> :
-                jobs.length === 0 ? <h1 className="text-2xl font-bold tracking-tight text-gray-900">No Jobs Found, Please change filters and try again!</h1> :
+                jobs.length === 0 ? <h1 className="text-2xl font-bold tracking-tight">No Jobs Found, Please change filters and try again!</h1> :
                 <SearchComp jobs={jobs} />
                 }
                 

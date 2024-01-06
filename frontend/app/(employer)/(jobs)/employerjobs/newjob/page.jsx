@@ -3,6 +3,7 @@ import React, {useEffect, useState, useContext} from 'react'
 import { useCookies } from 'react-cookie';
 import JobContext from '../../../../../context/JobContext';
 import { useRouter } from 'next/navigation'
+import { useTheme } from '../../../../../context/ThemeProvider';
 
 const jobTypeOptions = ["Permanent", "Temporary", "Intership"];
 const educationOptions = ["Bachelors", "Masters", "Phd"];
@@ -22,6 +23,7 @@ const experienceOptions = [
 ];
 
 const page = () => {
+    const { theme } = useTheme();
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])
     const accessToken = cookies.access
@@ -75,35 +77,33 @@ const page = () => {
   }, [created]);
 
   return (
-    <form className='m-6' onSubmit={handleSubmit}>
+    <form className={`${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'} p-6`} onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className=" border-gray-900/10 pb-12">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Job Update</h2>
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">New Job</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
-            update your job details.
+            Create a new job.
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
-              <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="title" className="block text-sm font-medium leading-6">
                 Job Title
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
                     placeholder="Enter Job Title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
-                </div>
               </div>
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="description" className="block text-sm font-medium leading-6">
                 Description
               </label>
               <div className="mt-2">
@@ -114,7 +114,7 @@ const page = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   rows={3}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -122,11 +122,11 @@ const page = () => {
         </div>
 
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Job Details</h2>
+          <h2 className="text-base font-semibold leading-7">Job Details</h2>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="email" className="block text-sm font-medium leading-6">
                 Email address
               </label>
               <div className="mt-2">
@@ -138,13 +138,13 @@ const page = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="address" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="address" className="block text-sm font-medium leading-6">
                 Address
               </label>
               <div className="mt-2">
@@ -154,13 +154,13 @@ const page = () => {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="salary" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="salary" className="block text-sm font-medium leading-6">
                 Salary
               </label>
               <div className="mt-2">
@@ -170,12 +170,12 @@ const page = () => {
                   value={salary}
                   onChange={(e) => setSalary(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
             <div className="sm:col-span-3">
-              <label htmlFor="company" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="company" className="block text-sm font-medium leading-6">
                 Company Name
               </label>
               <div className="mt-2">
@@ -185,20 +185,20 @@ const page = () => {
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div className="sm:col-span-3">
-              <label htmlFor="jobType" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="jobType" className="block text-sm font-medium leading-6">
                 Job Type
               </label>
               <div className="mt-2">
                 <select
                   value={jobType}
                   onChange={(e) => setJobType(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                     {jobTypeOptions.map((option) => (
                         <option key={option} value={option}>
@@ -209,14 +209,14 @@ const page = () => {
               </div>
             </div>
             <div className="sm:col-span-3">
-              <label htmlFor="education" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="education" className="block text-sm font-medium leading-6">
                 Level of Education
               </label>
               <div className="mt-2">
                 <select
                   value={education}
                   onChange={(e) => setEducation(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                     {educationOptions.map((option) => (
                         <option key={option} value={option}>
@@ -227,14 +227,14 @@ const page = () => {
               </div>
             </div>
             <div className="sm:col-span-3">
-              <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="industry" className="block text-sm font-medium leading-6">
                 Industry
               </label>
               <div className="mt-2">
                 <select
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                     {industriesOptions.map((option) => (
                         <option key={option} value={option}>
@@ -245,14 +245,14 @@ const page = () => {
               </div>
             </div>
             <div className="sm:col-span-3">
-              <label htmlFor="experience" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="experience" className="block text-sm font-medium leading-6">
                 Level of Experience
               </label>
               <div className="mt-2">
                 <select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                     {experienceOptions.map((option) => (
                         <option key={option} value={option}>
@@ -263,7 +263,7 @@ const page = () => {
               </div>
             </div>
             <div className="sm:col-span-3">
-              <label htmlFor="position" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="position" className="block text-sm font-medium leading-6">
                 Number of Positions
               </label>
               <div className="mt-2">
@@ -274,12 +274,12 @@ const page = () => {
                   onChange={(e) => setPositions(e.target.value)}
                   required
                   min={1}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
             <div className="">
-              <label htmlFor="remote" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="remote" className="block text-sm font-medium leading-6">
                 Remote
               </label>
               <div className="mt-2">
@@ -289,7 +289,7 @@ const page = () => {
                    type="checkbox"
                    checked={remote}
                    onChange={(e) => setRemote(e.target.checked)}
-                   className="block w-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                   className="block w-4 rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -300,7 +300,7 @@ const page = () => {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
+        <button type="button" className="text-sm font-semibold leading-6">
           Cancel
         </button>
         <button

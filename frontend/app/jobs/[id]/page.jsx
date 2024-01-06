@@ -14,9 +14,11 @@ import { useCookies } from 'react-cookie';
 import JobContext from '../../../context/JobContext';
 import AuthContext from '../../../context/AuthContext';
 import Link from 'next/link';
+import { useTheme } from '../../../context/ThemeProvider';
 
 
 const page = () => {
+    const { theme } = useTheme();
     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
     const router = useRouter()
     const { id } = useParams()
@@ -107,7 +109,7 @@ const page = () => {
   return (
     <>
         {loading ? <Loader /> : error ? <NotFound /> :
-        <div className="flex flex-wrap justify-between max-w-6xl mx-auto ml-6">
+        <div className={`flex flex-wrap justify-between max-w-6xl mx-auto pl-6 ${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
             <div className="job-post w-full md:w-8/12">
                 <div className='flex items-center gap-1 text-sm'>
                     <FaArrowLeft /><button onClick={() => router.back()}>Back</button>
@@ -134,27 +136,27 @@ const page = () => {
             {/* hidden only in medium or bigger screen*/}
             
             <div className="admin-controls block md:hidden text-sm mb-4 border-t border-b py-2">
-                {applied && user.id !== job.user &&
+                {applied && user?.id !== job.user &&
                 <p className='text-md text-green-600 mb-6'>
                     You have already applied for this job.
                 </p>}
-                {outOfDate && user.id !== job.user &&
+                {outOfDate && user?.id !== job.user &&
                 <p className='text-md text-red-600 mb-6'>
                     This job is out of date.
                 </p>}
-                {!isFavourite  && !outOfDate && user.id !== job.user && <button 
+                {!isFavourite  && !outOfDate && user?.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite  && !outOfDate && user.id !== job.user && <button 
+                {isFavourite  && !outOfDate && user?.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Remove from favourite
                 </button>}
-                { !applied && !outOfDate && user?.cv =='' && user.id !== job.user &&
+                { !applied && !outOfDate && user?.cv =='' && user?.id !== job.user &&
                 <p className='mb-6 border-b-2'>Please upload your Cv from <Link href={`/myprofile`} className='text-indigo-500'>My profile </Link>page to apply to this job</p>
                 }
                 <div className="controls">
@@ -203,7 +205,7 @@ const page = () => {
                 </Map>
             </div>  
             {
-                !applied && !outOfDate && user?.cv !=='' && user.id !== job.user &&
+                !applied && !outOfDate && user?.cv !=='' && user?.id !== job.user &&
                 <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-teal-600 text-white text-center block rounded-full py-2 mt-4 mb-6">Apply for this job</button>
             }
             
@@ -213,35 +215,34 @@ const page = () => {
             <div className="w-full hidden  md:block md:w-3/12">
                 <div className="employer-info mb-32 text-center ">
                 </div>
-                { !applied && !outOfDate && user?.cv !=='' && user.id !== job.user &&
+                { !applied && !outOfDate && user?.cv !=='' && user?.id !== job.user &&
                 <button onClick={applyToJobHandler} className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4">Apply for this job</button>
                 }
-                { !applied && !outOfDate && user?.cv =='' && user.id !== job.user &&
+                { !applied && !outOfDate && user?.cv =='' && user?.id !== job.user &&
                 <p>Please upload your Cv from <Link href={`/myprofile`} className='text-indigo-500'>My profile </Link>page to apply to this job</p>
                 }
-                {!isFavourite && !outOfDate && user.id !== job.user && <button 
+                {!isFavourite && !outOfDate && user?.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Save to favourite
                 </button>}
-                {isFavourite && !outOfDate && user.id !== job.user && <button 
+                {isFavourite && !outOfDate && user?.id !== job.user && <button 
                     className="w-full bg-indigo-700 hover:bg-indigo-500 text-white text-center block rounded-full py-2 mb-4"
                     onClick={handleFavourite }
                 >
                     Remove from favourite
                 </button>}
                 {applied && 
-                <p className='w-full bg-indigo-200 text-green-600 mb-6'>
+                <p className='w-full text-green-600 mb-6'>
                     You have already applied for this job.
                 </p>}
                 {outOfDate &&
-                <p className='w-full bg-indigo-200 text-red-600 mb-6'>
+                <p className='w-full text-red-600 mb-6'>
                     This job is out of date.
                 </p>}
         
                 <div className="admin-controls text-center text-sm border-gray-300 border-2">
-                    {/* <h5 className="text-gray-700 mb-2 ">Info</h5> */}
                     <div className="controls">
                         <div className='gap-1 text-sm p-2'>
                             Apply Before : {moment(job.createdAt).add(5, 'M').format('MMMM Do YYYY')}
