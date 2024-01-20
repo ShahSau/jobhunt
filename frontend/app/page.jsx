@@ -23,7 +23,6 @@ const Home = ()=> {
         setHottestJob(res.data.jobs)
       })
       .catch(err => {
-        console.log(err)
         toast.error(err.message)
       })
 
@@ -32,7 +31,6 @@ const Home = ()=> {
         setNewestJob(res.data.jobs)
       })
       .catch(err => {
-        console.log(err)
         toast.error(err.message)
       })
 
@@ -41,7 +39,6 @@ const Home = ()=> {
         setRemoteJob(res.data.jobs)
       })
       .catch(err => {
-        console.log(err)
         toast.error(err.message)
       })
 
@@ -51,7 +48,6 @@ const Home = ()=> {
         setLoadingJob(false)
       })
       .catch(err => {
-        console.log(err)
         toast.error(err.message)
       })
   }

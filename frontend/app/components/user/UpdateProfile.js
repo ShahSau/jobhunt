@@ -73,13 +73,13 @@ const UpdateProfile = ({ access_token }) => {
       formData
     ).then((response)=>{
       if (response.status === 200) {
+        toast.success('File uploaded successfully')
         setCv(response.data.url)
         setProcessLoading(false)
       }
     }).catch((error)=>{
       toast.error(error)
       setProcessLoading(false)
-      console.log(error)
     })
   };
 

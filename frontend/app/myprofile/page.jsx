@@ -22,6 +22,7 @@ const page = () => {
                 }
               ).then((response)=>{
                 if (response.status === 200) {
+                    toast.success('Logged in successfully!')
                     setIsAuthenticated(true)
                     setLoading(false)
                 }

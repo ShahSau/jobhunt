@@ -36,14 +36,12 @@ const page = () => {
   };
 
   useEffect(() => {
-    // setLoading(true)
     axios.get(`${process.env.API_URL}/api/me/jobs/`, config)
     .then(res => {
         setJobs(res.data)
         setLoading(false)
     })
     .catch(err => {
-        console.log(err)
         toast.error(err.message)
         setLoading(false)
     })

@@ -23,21 +23,21 @@ const JobHunt = ({name, data}) => {
                 <div key={job.id} className={`ml-6 md:ml-0 group group/item singleJob w-[250px] p-[20px] rounded-[10px] hover:bg-blueColor shadow-lg  hover:shadow-lg ${theme === 'light'?"bg-gray-100 shadow-greyIsh-400/700 text-black":"bg-gray-800 shadow-whiteIsh-100 text-white"}`}>
 
                   <span className='flex justify-between items-center gap-4'>
-                    <h1 className='text-[16px] font-semibold text-textColor group-hover:opacity-50'>{job.title}</h1>
+                    <h1 className='text-[16px] font-semibold text-textColor '>{job.title}</h1>
                   </span>
-                  <h6 className='group-hover:opacity-50 flex items-center gap-1'><IoLocationSharp/>{job.address}</h6>
+                  <h6 className=' flex items-center gap-1'><IoLocationSharp/>{job.address}</h6>
 
-                  <span className='flex items-center gap-1 group-hover:opacity-50'>
+                  <span className='flex items-center gap-1 '>
                     
                     <BiTimeFive/>{moment(job.createdAt).fromNow()}
                   </span>
 
-                  <p className='text-[13px] pt-[20px] border-t-[2px] mt-[20px] group-hover:opacity-50'>
+                  <p className='text-[13px] pt-[20px] border-t-[2px] mt-[20px] '>
                       {job.description.slice(0, 150)+'...'}
                   </p>
 
                   <div className='company flex items-center gap-2'>
-                      <span className='text-[14px] py-[1rem] block group-hover:opacity-50'>{job.company}</span>
+                      <span className='text-[14px] py-[1rem] block '>{job.company}</span>
                   </div>
 
                   <button className='border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor group-hover:bg-indigo-500 group-hover:text-white'>

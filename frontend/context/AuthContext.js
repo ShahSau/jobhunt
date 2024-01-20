@@ -76,14 +76,11 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
-      console.log(res.data);
-
       if (res.data.message) {
         setLoading(false);
         router.push("/login");
       }
     } catch (error) {
-      console.log(error.response);
       toast.error(error.response);
       setLoading(false);
       setError(
@@ -177,12 +174,12 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (res.data) {
+        toast.success("Profile Updated Successfully");
         setLoading(false);
         setUpdated(true);
         setUser(res.data);
       }
     } catch (error) {
-      console.log(error);
       toast.error("Something went wrong");
       setLoading(false);
       setError(
@@ -208,12 +205,11 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (res.data) {
-        console.log(res.data);
+        toast.success("Resume Uploaded Successfully");
         setLoading(false);
         setUploaded(true);
       }
     } catch (error) {
-      console.log(error.response);
       setLoading(false);
       toast.error("Something went wrong");
       setError(

@@ -32,6 +32,7 @@ export const JobProvider = ({ children }) => {
       );
 
       if (res.data.applied === true) {
+        toast.success("You have applied  to this job successfully");
         setLoading(false);
         setApplied(true);
       }
@@ -106,6 +107,7 @@ export const JobProvider = ({ children }) => {
       );
 
       if (res.data) {
+        toast.success("Job Created Successfully");
         setLoading(false);
         setCreated(true);
       }
@@ -135,6 +137,7 @@ export const JobProvider = ({ children }) => {
       );
 
       if (res.data) {
+        toast.success("Job Updated Successfully");
         setLoading(false);
         setUpdated(true);
       }
@@ -162,6 +165,7 @@ export const JobProvider = ({ children }) => {
         }
       );
 
+      toast.success("Job Deleted Successfully");
       setLoading(false);
       setDeleted(true);
     } catch (error) {

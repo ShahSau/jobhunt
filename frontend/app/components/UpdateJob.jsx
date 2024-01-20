@@ -58,7 +58,6 @@ const UpdateJob = ({job, id, accessToken}) => {
             remote
         };
         updateJob(id, job, accessToken);
-        //console.log(job);
      };
 
     useEffect(() => {

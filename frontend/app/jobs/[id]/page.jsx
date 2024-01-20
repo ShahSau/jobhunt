@@ -48,7 +48,6 @@ const page = () => {
         })
         .catch(err => {
             toast.error(err.message)
-            console.log(err)
             setError(true)
             setLoading(false)
         })
@@ -79,16 +78,16 @@ const page = () => {
           axios.request(config)
             .then((response) => {
                 const res =response.data;
-                console.log(res.favorite)
                 if(res.favorite === true){
+                    toast.success('Added to favourite')
                     setIsFavourite(true)
                 }
                 if(res.favorite === false){
+                    toast.success('Removed from favourite')
                     setIsFavourite(false)
                 }
             })
             .catch((error) => {
-                console.log(error);
                 toast.error(error.message)
             });
     }
@@ -99,6 +98,7 @@ const page = () => {
             if(res.data.length !== 0){
                 res.data.map(job => {
                     if(job.job.id === Number(id)){
+                        toast.success('This job is in your favourite list')
                         setIsFavourite(true)
                     }
                 })
@@ -106,7 +106,7 @@ const page = () => {
         })
         .catch(err => {
             toast.error(err.message)
-            console.log(err)
+
         })
     }, [isFavourite])
 

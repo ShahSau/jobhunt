@@ -16,8 +16,6 @@ const ThemeContext = createContext({
 export const ThemeProvider = ({theme:initialTheme, children}) => {
   const [theme, setTheme] = useState(initialTheme);
 
-  console.log('ThemeProvider (on server & client)');
-
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <div className={theme}>{children}</div>

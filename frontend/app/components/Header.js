@@ -25,7 +25,6 @@ const Header =()=> {
   const { user, loading, logout } = useContext(AuthContext);
   const { theme } = useTheme();
 
-  //console.log(user)
   return (
     <Disclosure as="nav" className={`${theme === 'light' ?'bg-gray-200 text-black' : 'bg-gray-900 text-white' }`}>
       {({ open }) => (

@@ -51,7 +51,6 @@ const page = () => {
     useContext(JobContext);
 
     const handleSubmit = (e) => {
-      console.log("submit");
       e.preventDefault();
       const job = {
           title,
@@ -68,7 +67,6 @@ const page = () => {
           remote
       };
       newJob( job, accessToken);
-      //console.log(job);
    };
    useEffect(() => {
     if(created){
