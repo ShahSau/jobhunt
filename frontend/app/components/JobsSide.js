@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 import { useTheme } from '../../context/ThemeProvider';
+
+
 const JobsSide = ({recentJob, remoteJob}) => {
   const { theme } = useTheme();
   return (

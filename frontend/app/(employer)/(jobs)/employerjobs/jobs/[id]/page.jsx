@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { useParams } from 'next/navigation'
 import UpdateJob from '../../../../../components/UpdateJob'
 import Loader from '../../../../../components/Loader';
-
+import {toast} from 'react-hot-toast'
 const page = () => {
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])
@@ -28,6 +28,7 @@ const page = () => {
         })
         .catch(err => {
             console.log(err)
+            toast.error(err.message)
             setLoading(false)
         })
 

@@ -6,8 +6,7 @@ import AuthContext from "../../../context/AuthContext";
 import Loader from "../Loader";
 import Link from "next/link";
 import { useTheme } from "../../../context/ThemeProvider";
-
-// import { toast } from "react-toastify";
+import {toast} from 'react-hot-toast'
 
 const preset_key =process.env.PRESET_KEY
 const cloud_name = process.env.CLOUD_NAME
@@ -78,6 +77,7 @@ const UpdateProfile = ({ access_token }) => {
         setProcessLoading(false)
       }
     }).catch((error)=>{
+      toast.error(error)
       setProcessLoading(false)
       console.log(error)
     })

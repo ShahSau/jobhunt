@@ -15,7 +15,7 @@ import JobContext from '../../../context/JobContext';
 import AuthContext from '../../../context/AuthContext';
 import Link from 'next/link';
 import { useTheme } from '../../../context/ThemeProvider';
-
+import {toast} from 'react-hot-toast'
 
 const page = () => {
     const { theme } = useTheme();
@@ -47,7 +47,7 @@ const page = () => {
             setCandidates(res.data.cabdidatesApplied)
         })
         .catch(err => {
-
+            toast.error(err.message)
             console.log(err)
             setError(true)
             setLoading(false)
@@ -89,6 +89,7 @@ const page = () => {
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(error.message)
             });
     }
 
@@ -103,13 +104,17 @@ const page = () => {
                 })
             }
         })
+        .catch(err => {
+            toast.error(err.message)
+            console.log(err)
+        })
     }, [isFavourite])
 
 
   return (
     <>
         {loading ? <Loader /> : error ? <NotFound /> :
-        <div className={`flex flex-wrap justify-between max-w-6xl mx-auto pl-6 ${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
+        <div className={`flex flex-wrap justify-between  mx-auto pl-6 ${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
             <div className="job-post w-full md:w-8/12">
                 <div className='flex items-center gap-1 text-sm'>
                     <FaArrowLeft /><button onClick={() => router.back()}>Back</button>
@@ -172,7 +177,7 @@ const page = () => {
                         <div className='gap-1 text-sm p-2'>
                             Education : {job.education}
                         </div>
-                    </div>
+                </div>
             </div>
         
             <div className="job-description mb-4 mt-4">
@@ -242,7 +247,7 @@ const page = () => {
                     This job is out of date.
                 </p>}
         
-                <div className="admin-controls text-center text-sm border-gray-300 border-2">
+                <div className="admin-controls text-center text-sm border-indigo-700 border-2">
                     <div className="controls">
                         <div className='gap-1 text-sm p-2'>
                             Apply Before : {moment(job.createdAt).add(5, 'M').format('MMMM Do YYYY')}

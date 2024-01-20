@@ -5,6 +5,7 @@ import JobContext from '../../../../../context/JobContext';
 import { useRouter } from 'next/navigation'
 import { useTheme } from '../../../../../context/ThemeProvider';
 
+
 const jobTypeOptions = ["Permanent", "Temporary", "Intership"];
 const educationOptions = ["Bachelors", "Masters", "Phd"];
 const industriesOptions = [

@@ -4,6 +4,7 @@ import AuthContext from "../../../context/AuthContext";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { useTheme } from '../../../context/ThemeProvider';
+
 const Register = () => {
     const { theme } = useTheme();
 

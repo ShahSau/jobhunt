@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import JobContext from '../../../context/JobContext'
 import { useTheme } from "../../../context/ThemeProvider";
-
-// import { toast } from "react-toastify";
+import {toast} from 'react-hot-toast'
 
 
 const TopicStats = () => {
@@ -14,7 +13,7 @@ const TopicStats = () => {
 
   useEffect(() => {
     if (error) {
-    //   toast.error(error);
+    toast.error(error);
       clearErrors();
     }
   }, [error]);

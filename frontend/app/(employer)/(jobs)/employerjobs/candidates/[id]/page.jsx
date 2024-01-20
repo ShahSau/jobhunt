@@ -5,13 +5,9 @@ import moment from 'moment';
 import { useCookies } from 'react-cookie';
 import { useParams, useRouter } from 'next/navigation'
 import React, {useState, useEffect, useContext, use} from 'react'
-import Link from 'next/link';
 import Loader from '../../../../../components/Loader';
 import { useTheme } from '../../../../../../context/ThemeProvider';
-import { FaPlus } from "react-icons/fa";
-import { FaPencil } from "react-icons/fa6";
-import { MdDelete } from "react-icons/md";
-import { FaUser, FaEye } from "react-icons/fa";
+import {toast} from 'react-hot-toast'
 
 const page = () => {
     const { theme } = useTheme();
@@ -33,6 +29,7 @@ const page = () => {
         })
         .catch((err) => {
             console.log(err)
+            toast.error(err.message)
         })
     }
     , [])
@@ -53,14 +50,13 @@ const page = () => {
         })
         .catch((err) => {
             console.log(err)
+            toast.error(err.message)
             setLoading(false)
         })
 
     }
     , [allusers])
 
-
-    console.log(data)
   return (
     <>
     {loading && data.length ==0 && <Loader />}

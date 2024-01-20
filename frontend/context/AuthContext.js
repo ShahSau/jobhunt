@@ -5,7 +5,7 @@ import { useState, useEffect, createContext } from "react";
 import cookie from "cookie";
 import { useRouter } from "next/navigation";
 import { useCookies } from 'react-cookie';
-
+import {toast} from 'react-hot-toast'
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }) => {
         
     } catch (error) {
       setLoading(false);
+      toast.error("Invalid Credentials");
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -83,6 +84,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error.response);
+      toast.error(error.response);
       setLoading(false);
       setError(
         error.response &&
@@ -115,6 +117,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       setIsAuthenticated(false);
       setUser(null);
+      toast.error("Invalid Credentials");
       setError(
         error?.response &&
           (error.response.data.detail || error.response.data.error)
@@ -133,6 +136,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
       setIsAuthenticated(false);
       setUser(null);
+      toast.error("Something went wrong");
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -179,6 +183,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
       setLoading(false);
       setError(
         error.response &&
@@ -210,6 +215,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.log(error.response);
       setLoading(false);
+      toast.error("Something went wrong");
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)

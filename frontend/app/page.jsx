@@ -7,6 +7,7 @@ import Link from 'next/link'
 import JobHunt from './components/JobHunt';
 import Loader from './components/Loader'
 import JobsSide from './components/JobsSide';
+import {toast} from 'react-hot-toast'
 
 
 const Home = ()=> {
@@ -23,7 +24,7 @@ const Home = ()=> {
       })
       .catch(err => {
         console.log(err)
-        //toast
+        toast.error(err.message)
       })
 
     axios.get(`${process.env.API_URL}/api/newestjobs/`)
@@ -32,7 +33,7 @@ const Home = ()=> {
       })
       .catch(err => {
         console.log(err)
-        //toast
+        toast.error(err.message)
       })
 
     axios.get(`${process.env.API_URL}/api/remotejobs/`)
@@ -41,7 +42,7 @@ const Home = ()=> {
       })
       .catch(err => {
         console.log(err)
-        //toast
+        toast.error(err.message)
       })
 
     axios.get(`${process.env.API_URL}/api/fresherjobs`)
@@ -51,6 +52,7 @@ const Home = ()=> {
       })
       .catch(err => {
         console.log(err)
+        toast.error(err.message)
       })
   }
   , [])

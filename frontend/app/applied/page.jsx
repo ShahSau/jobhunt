@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import Loader from '../components/Loader';
 import { useTheme } from '../../context/ThemeProvider';
-
+import {toast} from 'react-hot-toast'
 
 const page = () => {
     const { theme } = useTheme();
@@ -26,6 +26,7 @@ const page = () => {
         })
         .catch(err => {
             console.log(err)
+            toast.error(err.message)
             setLoading(false)
         })
     }

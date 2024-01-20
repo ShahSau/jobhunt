@@ -5,7 +5,7 @@ import { isAuthenticatedUser } from '../utils/isAuthenticated'
 import { useCookies } from 'react-cookie';
 import axios from "axios";
 import Loader from '../components/Loader';
-
+import {toast} from 'react-hot-toast'
 const page = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['access']);
     const[isAuthenticated,setIsAuthenticated] = useState(false)
@@ -28,6 +28,7 @@ const page = () => {
                 else{
                     setIsAuthenticated(false)
                     setLoading(false)
+                    toast.error('Please login to continue!')
                 }
               }).catch((error)=>{
                 setIsAuthenticated(false)

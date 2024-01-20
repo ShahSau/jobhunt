@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect, createContext } from "react";
 
 import { useRouter } from "next/navigation";
-
+import {toast} from 'react-hot-toast'
 const JobContext = createContext();
 
 export const JobProvider = ({ children }) => {
@@ -37,6 +37,7 @@ export const JobProvider = ({ children }) => {
       }
     } catch (error) {
       setLoading(false);
+      toast.error(error.response)
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -62,6 +63,7 @@ export const JobProvider = ({ children }) => {
       setApplied(res.data);
     } catch (error) {
       setLoading(false);
+      toast.error(error.response)
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -80,6 +82,7 @@ export const JobProvider = ({ children }) => {
       setStats(res.data);
     } catch (error) {
       setLoading(false);
+      toast.error(error.response)
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -107,6 +110,7 @@ export const JobProvider = ({ children }) => {
         setCreated(true);
       }
     } catch (error) {
+      toast.error(error.response)
       setLoading(false);
       setError(
         error.response &&
@@ -136,6 +140,7 @@ export const JobProvider = ({ children }) => {
       }
     } catch (error) {
       setLoading(false);
+      toast.error(error.response)
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
@@ -161,6 +166,7 @@ export const JobProvider = ({ children }) => {
       setDeleted(true);
     } catch (error) {
       setLoading(false);
+      toast.error(error.response)
       setError(
         error.response &&
           (error.response.data.detail || error.response.data.error)
