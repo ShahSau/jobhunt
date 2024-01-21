@@ -9,7 +9,7 @@
 	<img src="https://img.shields.io/github/last-commit/ShahSau/jobhunt?style=flat&color=0080ff" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/ShahSau/jobhunt?style=flat&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/ShahSau/jobhunt?style=flat&color=0080ff" alt="repo-language-count">
-<>
+
 <p align="center">
 		<em>Developed with the software and tools below.</em>
 </p>
@@ -49,11 +49,36 @@ This job portal is build on  Next.js (production-ready react framework), Django 
 
 ---
 
-<!-- ## 📦 Features
-write features of the project
-like nexr auth, map, live update of applied number of ppl, stat on jobs
+## 📦 Features
 
---- -->
+Empower your job recruitment and candidate management process with our cutting-edge feature set, seamlessly integrated into your platform. With a focus on JWT and cookies for secure authentication, dynamic map functionality, real-time updates, and comprehensive job statistics, our solution offers an unparalleled experience for both employers and candidates.
+
+
+- Authentication:
+Login process is secured by JWT and Cookies
+
+- Favorite Jobs Feature:
+Curate your personalized job list with our Favorite Jobs feature. Save and revisit positions that catch your eye, making it easy to prioritize and organize your applications.
+
+- Applied Jobs History:
+Access a comprehensive history of all your applied jobs in one place. 
+
+- Add and Delete Jobs:
+Take control of your job search by adding and deleting jobs as needed. 
+
+- Interactive Map:
+Leverage an intuitive map interface to visualize job locations and gain insights into geographical distribution.
+
+- Live Update of Applied Number of People:
+Real-time tracking of the number of applicants for each job.
+
+- Job Statistics:
+Access comprehensive statistics on various aspects of your job listings. 
+
+- Employer's View:
+Provide details of each candidates who applied for the job.
+
+---
 
 ## 📂 Repository Structure
 
@@ -404,6 +429,11 @@ Use the following command to run backend:
 ```sh
 python3 manage.py runserver 
 ```
+server starts at http://localhost:8000/
+
+```sh
+Starting development server at http://localhost:8000/
+```
 
 ##### Frontend
 
@@ -411,6 +441,11 @@ Use the following command to run frontend:
 
 ```sh
 npm run dev
+```
+App runs at http://localhost:3000/
+
+```sh
+- Local: http://localhost:3000
 ```
 
 ---
