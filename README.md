@@ -73,6 +73,9 @@ Leverage an intuitive map interface to visualize job locations and gain insights
 - Live Update of Applied Number of People:
 Real-time tracking of the number of applicants for each job.
 
+- Theme Change Options:
+Personalize your job search experience with the ability to change between dark and light mode. 
+
 - Job Statistics:
 Access comprehensive statistics on various aspects of your job listings. 
 
