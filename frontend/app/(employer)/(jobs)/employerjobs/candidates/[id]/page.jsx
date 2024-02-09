@@ -9,7 +9,7 @@ import Loader from '../../../../../components/Loader';
 import { useTheme } from '../../../../../../context/ThemeProvider';
 import {toast} from 'react-hot-toast'
 
-const page = () => {
+const Page = () => {
     const { theme } = useTheme();
     const [cookies] = useCookies(['access']);
     const accessToken = cookies.access
@@ -156,4 +156,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

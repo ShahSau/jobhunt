@@ -59,7 +59,7 @@ const filters = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-const page = () => {
+const Page = () => {
     const {theme} = useTheme()
     const [jobs, setJobs] = useState([])
     const [loadingJob, setLoadingJob] = useState(true)
@@ -360,4 +360,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -15,7 +15,7 @@ import Loader from '../../../components/Loader';
 import { useTheme } from '../../../../context/ThemeProvider';
 import {toast} from 'react-hot-toast'
 
-const page = () => {
+const Page = () => {
   const { theme } = useTheme();
   const [cookies] = useCookies(['access']);
   const [jobs, setJobs] = useState([])
@@ -180,4 +180,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

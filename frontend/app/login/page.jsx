@@ -5,7 +5,7 @@ import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext"; 
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const Page = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
   return (
@@ -17,4 +17,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

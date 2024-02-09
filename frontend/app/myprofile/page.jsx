@@ -6,7 +6,8 @@ import { useCookies } from 'react-cookie';
 import axios from "axios";
 import Loader from '../components/Loader';
 import {toast} from 'react-hot-toast'
-const page = () => {
+
+const Page = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['access']);
     const[isAuthenticated,setIsAuthenticated] = useState(false)
     const[loading,setLoading] = useState(false)
@@ -45,4 +46,4 @@ const page = () => {
 
 }
 
-export default page
+export default Page

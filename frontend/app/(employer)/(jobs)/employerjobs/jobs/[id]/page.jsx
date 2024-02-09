@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation'
 import UpdateJob from '../../../../../components/UpdateJob'
 import Loader from '../../../../../components/Loader';
 import {toast} from 'react-hot-toast'
-const page = () => {
+const Page = () => {
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])
     const accessToken = cookies.access
@@ -42,4 +42,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

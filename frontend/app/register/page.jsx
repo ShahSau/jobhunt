@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import Register from '../components/auth/Register'
-const page = () => {
+const Page = () => {
   
   return (
     <div>
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

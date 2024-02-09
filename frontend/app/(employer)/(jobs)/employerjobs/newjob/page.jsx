@@ -23,7 +23,7 @@ const experienceOptions = [
   "3 Year+",
 ];
 
-const page = () => {
+const Page = () => {
     const { theme } = useTheme();
     const [cookies] = useCookies(['access']);
     const [job, setJob] = useState([])
@@ -313,4 +313,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -2,7 +2,7 @@
 import React from 'react'
 import TopicStats from '../components/stats/TopicStats'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
         <TopicStats />
@@ -10,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

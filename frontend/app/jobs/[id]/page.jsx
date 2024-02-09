@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { useTheme } from '../../../context/ThemeProvider';
 import {toast} from 'react-hot-toast'
 
-const page = () => {
+const Page = () => {
     const { theme } = useTheme();
     const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN
     const router = useRouter()
@@ -270,4 +270,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
