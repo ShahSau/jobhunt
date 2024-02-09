@@ -41,7 +41,7 @@ const Page = () => {
     const [salary, setSalary] = useState("");
     const [positions, setPositions] = useState("");
     const [company, setCompany] = useState("");
-    const [remote, setRemote] = useState("");
+    let [remote, setRemote] = useState("");
 
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
@@ -52,6 +52,7 @@ const Page = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      remote !== '' ? remote = true : remote = false;
       const job = {
           title,
           description,

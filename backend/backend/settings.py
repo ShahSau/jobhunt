@@ -90,6 +90,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# postgres://jobhunt_db_user:KMht87hQubeeZyu1qEAuCDlgUl39uwI9@dpg-cn3a4gacn0vc738mvhag-a.frankfurt-postgres.render.com/jobhunt_db
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -101,7 +102,8 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
+#db_from_env = dj_database_url.config(conn_max_age=600)
+db_from_env = dj_database_url.parse('postgres://jobhunt_db_user:KMht87hQubeeZyu1qEAuCDlgUl39uwI9@dpg-cn3a4gacn0vc738mvhag-a.frankfurt-postgres.render.com/jobhunt_db')
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
@@ -146,11 +148,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+#
 CORS_ORIGIN_ALLOW_ALL = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     'http://localhost:3000',
-#     'http://127.0.0.1:3000'
+#     'http://127.0.0.1:3000',
+#     'https://jobhunt-three.vercel.app/'
 # ]
 
 # Static files (CSS, JavaScript, Images)
@@ -162,7 +166,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 # Default primary key field type

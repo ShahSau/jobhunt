@@ -49,6 +49,8 @@ def getJob(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def newJob(request):
+    print(request.data)
+    request.data['remote'] = False
     request.data['user'] = request.user
     data = request.data
 
