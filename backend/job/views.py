@@ -43,9 +43,7 @@ def getJob(request, pk):
     
     serializer = JobSerializer(job, many=False)
 
-    jobs = Job.objects.all().filter(education=serializer.data.education).count(6).order_by('id')
-
-    return Response({'job':serializer.data, 'cabdidatesApplied':cabdidatesApplied, 'relatedJobs':jobs})
+    return Response({'job':serializer.data, 'cabdidatesApplied':cabdidatesApplied})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -34,7 +34,11 @@ const Page = () => {
     const { applyToJob, checkJobApplied, applied, clearErrors } =
     useContext(JobContext);
     const { user } = useContext(AuthContext);
-
+    
+    if(user === null){
+        router.push('/login')
+        return
+    }
     const config = {
         headers: { Authorization: `Bearer ${accessToken}` }
       };
