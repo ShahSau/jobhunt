@@ -463,7 +463,7 @@ App runs at http://localhost:3000/
 ---
 ## 📄 License
 
-This project is protected under the MIT License. For more details, refer to the [LICENSE](https://github.com/ShahSau/jobhunt?tab=MIT-1-ov-file) file.
+This project is protected under the MIT License.
 
 ---
 
