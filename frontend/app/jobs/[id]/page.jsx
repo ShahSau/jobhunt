@@ -35,15 +35,22 @@ const Page = () => {
     useContext(JobContext);
     const { user } = useContext(AuthContext);
     
-    if(user === null){
-        router.push('/login')
-        return
-    }
-    const config = {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      };
+    // if(user === null){
+    //     router.push('/login')
+    //     return
+    // }
+    // const config = {
+    //     headers: { Authorization: `Bearer ${accessToken}` }
+    //   };
 
     useEffect(() => {
+        if(user === null){
+            router.push('/login')
+            return
+        }
+        const config = {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          };
         axios.get(`${process.env.API_URL}/api/jobs/${id}/`, config)
         .then(res => {
             setJob(res.data.job)
@@ -97,6 +104,13 @@ const Page = () => {
     }
 
     useEffect(() => {
+        if(user === null){
+            router.push('/login')
+            return
+        }
+        const config = {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          };
         axios.get(`${process.env.API_URL}/api/me/jobs/favorites/`, config)
         .then(res => {
             if(res.data.length !== 0){
