@@ -11,7 +11,7 @@
 	<img src="https://img.shields.io/github/languages/count/ShahSau/jobhunt?style=flat&color=0080ff" alt="repo-language-count">
 
 <p align="center">
-		<em>Developed with the software and tools below.</em>
+	<em>Developed with the software and tools below.</em>
 </p>
 <p align="center">
 	<img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=flat&logo=JavaScript&logoColor=black" alt="JavaScript">
