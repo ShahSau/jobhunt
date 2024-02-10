@@ -19,6 +19,7 @@ const Page = () => {
     };
 
     useEffect(() => {
+      setTimeout(() => {
         axios.get(`${process.env.API_URL}/api/me/jobs/applied/`, config)
         .then(res => {
             setJobs(res.data)
@@ -29,6 +30,7 @@ const Page = () => {
             setLoading(false)
         })
     }
+      )}
     , [])
   return (
     <>

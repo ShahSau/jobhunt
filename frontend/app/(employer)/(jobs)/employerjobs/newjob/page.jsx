@@ -34,10 +34,10 @@ const Page = () => {
     const [description, setDescription] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
-    const [jobType, setJobType] = useState("");
-    const [education, setEducation] = useState("");
-    const [industry, setIndustry] = useState("");
-    const [experience, setExperience] = useState("");
+    const [jobType, setJobType] = useState(jobTypeOptions[0]);
+    const [education, setEducation] = useState(educationOptions[1]);
+    const [industry, setIndustry] = useState(industriesOptions[1]);
+    const [experience, setExperience] = useState(experienceOptions[1]);
     const [salary, setSalary] = useState("");
     const [positions, setPositions] = useState("");
     const [company, setCompany] = useState("");

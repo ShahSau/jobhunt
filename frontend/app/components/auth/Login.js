@@ -90,7 +90,9 @@ const Login = () => {
           </button>
         </div>
       </form>
-
+    <p>for demo purpose, use following credentials</p>
+    <p>email: test@test.com</p>
+    <p>password: 123456</p>
       <p className="mt-10 text-center text-sm text-gray-500">
         Not a member?{' '}
         <Link href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">

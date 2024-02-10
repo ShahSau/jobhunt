@@ -132,8 +132,8 @@ const Page = () => {
                               </td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.candidate?.email}</td>
                               <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{new Date(person.appliedAt).toDateString()}</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a target='_blank' href={person.candidate?.github}>{person.candidate?.github}</a></td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a target='_blank' href={person.candidate?.linkedin}>{person.candidate?.linkedin}</a></td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a target='_blank' href={`https://${person.candidate?.github}`}>{person.candidate?.github}</a></td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a target='_blank' href={`https://${person.candidate?.linkedin}`}>{person.candidate?.linkedin}</a></td>
                               {person.candidate?.cv && <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                 <a target="_blank" href={person.candidate?.cv} className="text-indigo-600 hover:text-indigo-900">
                                   cv<span className="sr-only">,{person.candidate?.cv}</span>
