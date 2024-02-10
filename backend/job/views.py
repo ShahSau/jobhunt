@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -19,8 +20,6 @@ def getAllJobs(request):
     #jobs = Job.objects.all()
     filterset = JobsFilter(request.GET, queryset=Job.objects.all().order_by('id'))
     count = filterset.qs.count()
-
-    print(filterset)
 
     # Pagination
     resPerPage = filterset.qs.count()
@@ -44,7 +43,9 @@ def getJob(request, pk):
     
     serializer = JobSerializer(job, many=False)
 
-    return Response({'job':serializer.data, 'cabdidatesApplied':cabdidatesApplied})
+    jobs = Job.objects.all().filter(education=serializer.data.education).count(6).order_by('id')
+
+    return Response({'job':serializer.data, 'cabdidatesApplied':cabdidatesApplied, 'relatedJobs':jobs})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

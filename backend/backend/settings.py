@@ -102,8 +102,8 @@ DATABASES = {
     }
 }
 
-#db_from_env = dj_database_url.config(conn_max_age=600)
-db_from_env = dj_database_url.parse('postgres://jobhunt_db_user:KMht87hQubeeZyu1qEAuCDlgUl39uwI9@dpg-cn3a4gacn0vc738mvhag-a.frankfurt-postgres.render.com/jobhunt_db')
+db_from_env = dj_database_url.config(conn_max_age=600)
+#db_from_env = dj_database_url.parse('postgres://jobhunt_db_user:KMht87hQubeeZyu1qEAuCDlgUl39uwI9@dpg-cn3a4gacn0vc738mvhag-a.frankfurt-postgres.render.com/jobhunt_db')
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
