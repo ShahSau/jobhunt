@@ -1,36 +1,109 @@
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { AiOutlineUnlock } from 'react-icons/ai'
 import { BiUser } from 'react-icons/bi'
+import { useTheme } from '../providers/ThemeProvider'
+import Input from '../components/Input'
+import { validateFormData } from '../utils/validation'
+import { schemaLogin } from '../schemas/login.schema'
+import { useRouter } from 'next/navigation'
+import { encryptData } from '../utils/cryptoToken'
 
+
+type FormData = {
+  email: string,
+  password: string
+}
+
+type Errors = {
+  email?: string;
+  password?: string;
+};
 
 const Page = () => {
+  const { theme } = useTheme();
+  const router = useRouter();
+
+
+
+  const [state, setState] = useState<FormData>({
+    email: '',
+    password: ''
+  })
+  const [errors, setErrors] = useState<Errors>({})
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(state)
+    const { errors } = validateFormData(schemaLogin, state);
+
+    if (errors) {
+      setErrors(errors);
+      console.log(errors);
+      return;
+    }
+    setErrors({});
+
+    // Send data to the server
+    fetch(`http://localhost:8080/api/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(state)
+    }).then(res => res.json()).then(data => {
+      if (data.token) {
+        const salt = process.env.NEXT_PUBLIC_SALT;
+        if (!salt) {
+          console.error('Salt is not defined');
+          return;
+        }
+        const encryptedToken = encryptData(data.token, salt);
+        localStorage.setItem('token', encryptedToken);
+        router.push('/');
+      }
+    }).catch(err => {
+      console.log(err) //use toast to show error message
+    })
+
+  }
+
   return (
-    <div className='text-black h-[100vh] flex justify-center items-center bg-cover bg-red-200'>
-      <div>
-        <div className='bg-slate-800 border border-slate-400 rounded-md p-8 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative'>
-          <h1 className='text-4xl text-white font-bold text-center mb-6'>Login</h1>
-            <form>
-              <div className='relative my-6'>
-                <BiUser className='absolute top-1'/>
-                <input type='text' className='block w-72 py-2.3 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appreance-none dark:focus:border-blue-500 focus:text-white focus:border-blue-600 peer' placeholder=''/>
-                <label htmlFor='email' className='absolute text-sm text-white duration-300 transform translate-y-6 scale-75 top-1 left-6 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Your Email</label>
-              </div>
+    <div className={`h-[100vh] flex justify-center items-center bg-cover ${theme === 'light' ? 'bg-gray-300 text-gray-900':'bg-gray-800 text-gray-100'}`}>
+      <div className={`border border-slate-400 rounded-md p-8 shadow-xl backdrop-filter backdrop-blur-sm bg-opacity-30 relative ${theme=== 'light' ? 'bg-slate-200' :'bg-slate-500'}`}>
+        <h1 className={`text-4xl font-bold text-center mb-6 ${theme === 'light' ? 'text-gray-900':'text-gray-100'}`}>Login</h1>
+        <form onSubmit={
+          handleSubmit
+        }>
+          {/*Eamil */}
+          <div className='relative my-8'>
+            <Input theme={theme} value={state.email} onChange={handleChange} label='Your Email' name="email" type="text"/>
+            <BiUser className='absolute top-1 right-1'/>
+            {errors.email && <p style={{ color: 'red', marginTop: '12px' }}>{errors.email}</p>} {/* Display email error message */}
+          </div>
 
-              <div className='relative my-6'>
-                <AiOutlineUnlock className='absolute top-1'/>
-                <input type='password' className='block w-72 py-2.3 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appreance-none dark:focus:border-blue-500 focus:text-white focus:border-blue-600 peer' placeholder=''/>
-                <label htmlFor='password' className='absolute text-sm text-white duration-300 transform translate-y-6 scale-75 top-1 left-6 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'>Your Password</label>
-              </div>
+          {/*Password */}
+          <div className='relative my-8'>
+            <Input theme={theme} value={state.password} onChange={handleChange} label='Your Password' name="password" type="password"/>
+            <AiOutlineUnlock className='absolute top-1 right-1'/>
+            {errors.password && <p style={{ color: 'red', marginTop: '12px' }}>{errors.password}</p>} {/* Display password error message */}
+          </div>
 
-              <button type='submit' className='w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-emerald-600 hover:text-white py-2 transition-colors duration-300'>Login</button>
+          <button type='submit' className={`w-full mb-4 text-[18px] mt-6 rounded-full text-purple-600 hover:bg-purple-600 py-2 transition-colors duration-300 hover:text-gray-100 ${theme === 'light' ? 'bg-gray-300':'bg-gray-800'}`}>Login</button>
 
-              <div>
-                <span className='m-4'>New here?<Link href='/register' className='text-blue-500'> Create an account </Link></span>
-              </div>
+          <div>
+            <span className='m-4 flex justify-center'><Link href='/register' className='text-purple-500'> Create an account </Link></span>
+          </div>
 
-            </form>
-        </div>
+        </form>
       </div>
     </div>
   )
