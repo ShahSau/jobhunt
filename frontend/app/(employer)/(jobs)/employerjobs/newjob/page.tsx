@@ -1,8 +1,14 @@
+import Header from '../../../../components/Header'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <div>
+      <Header />
+      <h1 className="text-3xl font-bold underline text-red-800">
+        New Job Page
+      </h1>
+    </div>
   )
 }
 

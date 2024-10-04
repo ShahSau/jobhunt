@@ -1,9 +1,19 @@
-import Image from "next/image";
+'use client'
+import Header from "./components/Header";
+import { useTheme } from "./providers/ThemeProvider";
 
-export default function Home() {
+const Home=()=> {
+  const { theme } = useTheme();
+  console.log(theme,"FFFFFFFF");
   return (
-    <h1 className="text-3xl font-bold underline text-red-800">
-      Hello world!
-    </h1>
+    <>
+      <Header />
+      <h1 className="text-3xl font-bold underline text-red-800">
+        Hello world!
+      </h1>
+    </>
+
   );
 }
+
+export default Home;
