@@ -5,6 +5,7 @@ import ToasterProvider from "./providers/ToasterProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -35,8 +36,7 @@ export default function RootLayout({
       >
         <ThemeProvider theme="light">
           <ToasterProvider />
-
-          {children}
+            {children}
         </ThemeProvider>
       </body>
     </html>

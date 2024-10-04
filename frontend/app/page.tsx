@@ -1,10 +1,24 @@
 'use client'
+import { useEffect,useState } from "react";
 import Header from "./components/Header";
 import { useTheme } from "./providers/ThemeProvider";
+import { decryptData } from "./utils/cryptoToken";
+
 
 const Home=()=> {
   const { theme } = useTheme();
-  console.log(theme,"FFFFFFFF");
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tokenString = window.localStorage.getItem('token');
+    const salt = process.env.NEXT_PUBLIC_SALT|| '';
+    const token = tokenString ? decryptData(tokenString, salt) : null;
+    setToken(token);
+  }, []);
+
+
+  console.log(theme,"FFFFFFFF",token);
+
   return (
     <>
       <Header />
