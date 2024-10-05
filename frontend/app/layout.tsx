@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ToasterProvider from "./providers/ToasterProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
+import { UserProvider } from "./providers/AuthProvider";
 
 
 
@@ -36,7 +37,9 @@ export default function RootLayout({
       >
         <ThemeProvider theme="light">
           <ToasterProvider />
-            {children}
+            <UserProvider userSignedIn={false}>
+              {children}
+            </UserProvider>
         </ThemeProvider>
       </body>
     </html>
