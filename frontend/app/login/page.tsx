@@ -71,6 +71,7 @@ const Page = () => {
         const encryptedToken = encryptData(data.token, salt);
         setUserSignedIn(true);
         localStorage.setItem('token', encryptedToken);
+        localStorage.setItem('user', JSON.stringify(data.data));;
         
         router.push('/myprofile');
       }

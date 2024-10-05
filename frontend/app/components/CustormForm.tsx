@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import { FaEnvelope, FaGithub, FaLinkedin, FaUser, FaUserCircle, FaUserEdit } from 'react-icons/fa';
 import { MdPhoto } from "react-icons/md";
 import { useTheme } from '../providers/ThemeProvider';
@@ -6,6 +6,8 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 import { FaMobileScreenButton } from 'react-icons/fa6';
 import FormInput from './FormInput';
 import axios from 'axios';
+import { decryptData } from '../utils/cryptoToken';
+import Image from 'next/image';
 
 
 const preset_key = process.env.PRESET_KEY || '';
@@ -25,15 +27,36 @@ const CustomForm: FC = () => {
     github: '',
     linkedin: '',
   });
+  const [token, setToken] = useState<string | null>(null);
 
-//   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
+
+  useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem('user') || '{}');
+    setFormData({
+        ...formData,
+        username: user.username,
+        email: user.email ,
+        firstName: user.firstName ,
+        lastName: user.lastName ,
+        phone: user.phone ,
+    });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const tokenString = window.localStorage.getItem('token');
+    const salt = process.env.NEXT_PUBLIC_SALT|| '';
+    const token = tokenString ? decryptData(tokenString, salt) : null;
+    setToken(token);
+  }, []);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+   
+  };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // const file = e.target.files ? e.target.files[0] : null;
-    // setFormData({ ...formData, cv: file });
     const file = e.target.files ? e.target.files[0] : null;
     if (!file) {
       return;
@@ -65,9 +88,39 @@ const CustomForm: FC = () => {
   };
 
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log('Form Data: ', formData);
+
+    // Send data to the server
+    try{
+
+    const res = await axios.put('http://localhost:8080/api/auth/me/update', formData, {
+        headers: {
+            'Content-Type': 'application/json',
+            token: `Bearer ${token}`,
+        },
+    });
+    if (res.status === 200) {
+        // toast.success('User updated successfully')
+        setFormData({
+            username: res.data.username,
+            email: res.data.email,
+            password: '',
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            phone: res.data.phone,
+            cv: res.data.cv,
+            github: res.data.github,
+            linkedin: res.data.linkedin,
+        });
+        localStorage.setItem('user', JSON.stringify(res.data));
+    }
+    console.log('Response: ', res);
+    } catch (error) {
+        // toast.error('Error updating user')
+    console.error('Error updating user: ', error);
+    }
   };
 
   return (
@@ -86,19 +139,27 @@ const CustomForm: FC = () => {
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                     {/*github */}
                     <div className="sm:col-span-4">
-                        <FormInput theme={theme} label='Github' Icon={FaGithub} placeholder="www.github.com/example" type="text"/>
+                        <FormInput 
+                            theme={theme} name='Github' label='github' Icon={FaGithub} placeholder="www.github.com/example" type="text"
+                            value={formData.github}
+                            onChange={handleChange}
+                        />
                     </div>
             
                     {/*linkedin */}
                     <div className="sm:col-span-4">
-                        <FormInput theme={theme} label='Linkedin' Icon={FaLinkedin} placeholder="www.linkedin.com/example" type="text"/>
+                        <FormInput 
+                            theme={theme} label='linkedin' Icon={FaLinkedin} placeholder="www.linkedin.com/example" type="text" name="Linkedin"
+                            value={formData.linkedin}
+                            onChange={handleChange}
+                        />
                     </div>
 
                     <div className="col-span-full">
                     <label htmlFor="cover-photo" className={`block text-sm font-medium leading-6 ${theme === 'light' ? 'text-gray-900':'text-gray-100'}`}>
                         CV
                     </label>
-                    <div className={`mt-2 flex justify-center rounded-lg border border-dashed px-6 py-10 ${theme === 'light' ? 'border-gray-900/25' : 'border-gray-500'}`}>
+                    {!formData.cv && typeof formData.cv !== 'string' && (<div className={`mt-2 flex justify-center rounded-lg border border-dashed px-6 py-10 ${theme === 'light' ? 'border-gray-900/25' : 'border-gray-500'}`}>
                         <div className="text-center">
                         <MdPhoto aria-hidden="true" className={`mx-auto h-12 w-12  ${theme === 'light' ? 'text-gray-900':'text-gray-100'}`}/>
                         <div className={`mt-4 flex text-sm leading-6  ${theme === 'light' ? 'text-gray-600':'text-gray-200'}`}>
@@ -119,7 +180,12 @@ const CustomForm: FC = () => {
                         </div>
                         <p className={`text-xs leading-5 ${theme === 'light' ? 'text-gray-600':'text-gray-200'}`}>PNG, JPG, GIF up to 10MB</p>
                         </div>
-                    </div>
+                    </div>)}
+                    {formData.cv && typeof formData.cv === 'string' && (
+                        <div className="mt-4 flex justify-center">
+                            <Image src={formData.cv} alt="CV" width={400} height={400} />
+                        </div>
+                    )}
                     </div>
                 </div>
 
@@ -135,32 +201,56 @@ const CustomForm: FC = () => {
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                     {/* First Name */}
                     <div className="sm:col-span-3">
-                        <FormInput theme={theme} label='First Name' Icon={FaUser} placeholder="First Name" type="text"/>
+                        <FormInput 
+                            theme={theme} name='First Name' label='firstName' Icon={FaUser} placeholder="First Name" type="text"
+                            value={formData.firstName}
+                            onChange={handleChange}    
+                        />
                     </div>
 
                     {/* Last Name */}
                     <div className="sm:col-span-3">
-                        <FormInput theme={theme} label='Last Name' Icon={FaUserEdit} placeholder="Last Name" type="text"/>
+                        <FormInput 
+                            theme={theme} name='Last Name' Icon={FaUserEdit} placeholder="Last Name" type="text" label='lastName'
+                            value={formData.lastName}
+                            onChange={handleChange}    
+                        />
                     </div>
 
                     {/* Email */}
                     <div className="sm:col-span-4">
-                        <FormInput theme={theme} label='Email' Icon={FaEnvelope} placeholder="Email" type="email"/>
+                        <FormInput 
+                            theme={theme} name='Email' Icon={FaEnvelope} placeholder="Email" type="email" label='email'
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
                     </div>
 
                     {/* Password */}
                     <div className="sm:col-span-4">
-                        <FormInput theme={theme} label='Password' Icon={RiLockPasswordLine} placeholder="********" type="password"/>
+                        <FormInput
+                            theme={theme} name='Password' Icon={RiLockPasswordLine} placeholder="********" type="password" label='password'
+                            value={formData.password}
+                            onChange={handleChange}    
+                        />
                     </div>
 
                     {/* Username */}
                     <div className="sm:col-span-3">
-                        <FormInput theme={theme} label='Username' Icon={FaUserCircle} placeholder="Username" type="text"/>
+                        <FormInput
+                            theme={theme} name='Username' Icon={FaUserCircle} placeholder="Username" type="text" label='username'
+                            value={formData.username}
+                            onChange={handleChange}    
+                        />
                     </div>
 
                     {/* Phone */}
                     <div className="sm:col-span-3">
-                        <FormInput theme={theme} label='Phone' Icon={FaMobileScreenButton} placeholder="Phone" type="tel"/>
+                        <FormInput
+                            theme={theme} name='Phone' Icon={FaMobileScreenButton} placeholder="Phone" type="tel" label='phone'
+                            value={formData.phone}
+                            onChange={handleChange}
+                        />
                     </div>
                     
                     
