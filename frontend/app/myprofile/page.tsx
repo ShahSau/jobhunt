@@ -12,11 +12,13 @@ const Page = () => {
   const { theme } = useTheme()
   
 
-  // useEffect(() => {
-  //   if(!userSignedIn) {
-  //     router.push('/login')
-  //   }
-  // }, [userSignedIn])
+  useEffect(() => {
+    if(!userSignedIn) {
+      router.push('/login')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSignedIn])
+  
   return (
     <div className={` ${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
       <Header />
