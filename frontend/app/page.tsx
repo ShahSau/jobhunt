@@ -3,11 +3,16 @@ import { useEffect,useState } from "react";
 import Header from "./components/Header";
 import { useTheme } from "./providers/ThemeProvider";
 import { decryptData } from "./utils/cryptoToken";
+import { useUser } from './providers/AuthProvider'
 
 
 const Home=()=> {
   const { theme } = useTheme();
   const [token, setToken] = useState<string | null>(null);
+
+  const { userSignedIn } = useUser()
+  console.log(userSignedIn,"DDDD")
+
 
   useEffect(() => {
     const tokenString = window.localStorage.getItem('token');
@@ -17,7 +22,6 @@ const Home=()=> {
   }, []);
 
 
-  console.log(theme,"FFFFFFFF",token);
 
   return (
     <>

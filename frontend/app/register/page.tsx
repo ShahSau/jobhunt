@@ -59,7 +59,7 @@ const Page = () => {
       return;
     }
     setErrors({});
-    const jk = process.env.NEXT_PUBLIC_API_URL
+    //const jk = process.env.NEXT_PUBLIC_API_URL
     fetch(`http://localhost:8080/api/auth/register`, {
       method: 'POST',
       headers: {

@@ -9,6 +9,7 @@ import { validateFormData } from '../utils/validation'
 import { schemaLogin } from '../schemas/login.schema'
 import { useRouter } from 'next/navigation'
 import { encryptData } from '../utils/cryptoToken'
+import { useUser } from '../providers/AuthProvider'
 
 
 type FormData = {
@@ -24,6 +25,7 @@ type Errors = {
 const Page = () => {
   const { theme } = useTheme();
   const router = useRouter();
+  const { setUserSignedIn } = useUser();
 
 
 
@@ -67,8 +69,10 @@ const Page = () => {
           return;
         }
         const encryptedToken = encryptData(data.token, salt);
+        setUserSignedIn(true);
         localStorage.setItem('token', encryptedToken);
-        router.push('/');
+        
+        router.push('/myprofile');
       }
     }).catch(err => {
       console.log(err) //use toast to show error message
