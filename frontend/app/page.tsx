@@ -11,7 +11,7 @@ const Home=()=> {
   const [token, setToken] = useState<string | null>(null);
 
   const { userSignedIn } = useUser()
-  console.log(userSignedIn,"DDDD")
+  console.log(userSignedIn,"DDDD",token, theme)
 
 
   useEffect(() => {
