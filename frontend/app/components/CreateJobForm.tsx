@@ -1,38 +1,26 @@
-'use client'
-import { useTheme } from '@/app/providers/ThemeProvider';
-import Header from '../../../../components/Header'
 import React from 'react'
-import CreateJobForm from '@/app/components/CreateJobForm';
-import Testimonials from '@/app/components/Testimonials';
-
-
-
-
-const Page = () => {
+import { useTheme } from '@/app/providers/ThemeProvider';
+const jobTypeOptions = ["Permanent", "Temporary", "Intership"];
+const educationOptions = ["Bachelors", "Masters", "Phd"];
+const industriesOptions = [
+  "Business",
+  "Information Technology",
+  "Banking",
+  "Education",
+  "Telecommunication",
+  "Others",
+];
+const experienceOptions = [
+  "No Experience",
+  "1 Years",
+  "2 Years",
+  "3 Year+",
+];
+const CreateJobForm = () => {
   const { theme } = useTheme();
   return (
     <div>
-      <Header />
-      {/**split the screen into two parts and hide the right part in small screen */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
-
-        {/**Left Part */}
-        <div className="bg-blue-500 p-8 h-full overflow-y-scroll">
-          <h1 className="text-white text-3xl">Left Part</h1>
-          <p className="text-white mt-4">This part is always visible.</p>
-          <CreateJobForm
-            // jobTypeOptions={jobTypeOptions}
-            // educationOptions={educationOptions}
-            // industriesOptions={industriesOptions}
-            // experienceOptions={experienceOptions}
-          />
-        </div>
-
-        <div className={`p-8 hidden lg:block h-screen ${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'}`}>
-          <Testimonials /> 
-        </div>
-      </div>
-      {/* <form className={`${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'} p-6`}>
+      <form className={`${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'} p-6`}>
       <div className="space-y-12">
         <div className=" border-gray-900/10 pb-12">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">New Job</h2>
@@ -250,9 +238,9 @@ const Page = () => {
           Save
         </button>
       </div>
-    </form> */}
+    </form>
     </div>
   )
 }
 
-export default Page
+export default CreateJobForm
