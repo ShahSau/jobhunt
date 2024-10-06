@@ -1,16 +1,31 @@
 'use client'
 import Header from '../../../../components/Header'
 import React from 'react'
+import CreateJobForm from '@/app/components/CreateJobForm';
+import Testimonials from '@/app/components/Testimonials';
+
+
 
 const Page = () => {
+
   return (
-    <div>
-      <Header />
-      <h1 className="text-3xl font-bold underline text-red-800">
-        New Job Page
-      </h1>
+    <>
+    <Header />
+    <div className="h-screen grid grid-cols-1 md:grid-cols-2">
+
+      <div className="overflow-auto">
+        <div className="">
+          <CreateJobForm />
+        </div> 
+          
+      </div>
+      <div className="hidden md:block overflow-hidden p-4">
+        <Testimonials />
+      </div>
     </div>
-  )
-}
+    </>
+  )}
+
+
 
 export default Page

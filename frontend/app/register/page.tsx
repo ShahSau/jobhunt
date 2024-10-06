@@ -10,6 +10,7 @@ import { MdOutlinePhoneAndroid } from 'react-icons/md'
 import { validateFormData } from '../utils/validation'
 import { schemaRegistration } from '../schemas/register.schema'
 import { useRouter } from 'next/navigation'
+import Button from '../components/Button'
 
 type FormData = {
   email: string,
@@ -121,7 +122,7 @@ const Page = () => {
             {errors.phone && <p style={{ color: 'red', marginTop: '12px' }}>{errors.phone}</p>} {/* Display phone error message */}
           </div>
 
-          <button type='submit' className={`w-full mb-4 text-[18px] mt-6 rounded-full text-purple-600 hover:bg-purple-600 py-2 transition-colors duration-300 hover:text-gray-100 ${theme === 'light' ? 'bg-gray-300':'bg-gray-800'}`}>Register</button>
+          <Button type='submit' text='Register' className='w-full mb-4 text-[18px] mt-6 rounded-full text-purple-600 hover:bg-purple-600 py-2 transition-colors duration-300 hover:text-gray-100' />
 
           <div>
             <span className='m-4 flex justify-center'><Link href='/register' className='text-purple-500'> Login to your account </Link></span>
