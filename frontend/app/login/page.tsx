@@ -13,6 +13,7 @@ import { useUser } from '../providers/AuthProvider'
 import Button from '../components/Button'
 
 
+
 type FormData = {
   email: string,
   password: string
@@ -113,6 +114,7 @@ const Page = () => {
         </form>
       </div>
     </div>
+
   )
 }
 

@@ -69,7 +69,7 @@ const TestimonialsColumn = (props:{className?:string; testimonials: typeof testi
               <div key={index}>
                 {props.testimonials.map(({ text, imageSrc, name, position,company }, index) => (
                   <div key={index}
-                    className={`flex items-center p-4 my-4 rounded-lg shadow-md transition duration-200 ${theme === 'light'? 'bg-gray-800 text-gray-100': 'bg-gray-100 text-gray-400'}`}
+                    className={`flex items-center p-4 my-4 rounded-lg shadow-md transition duration-200 ${theme === 'dark'? 'bg-gray-800 text-gray-100': 'bg-gray-100 text-gray-400'}`}
                   >
                     <Image
                       src={imageSrc}
@@ -101,7 +101,7 @@ const Testimonials = () => {
   return (
     <section>
       <div className="container">
-        <div className="flex justify-center [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[738px] overflow-hidden">
+        <div className="flex justify-center [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[800px] overflow-hidden">
           <TestimonialsColumn testimonials={testimonials} duration={20}/>
         </div>
       </div>

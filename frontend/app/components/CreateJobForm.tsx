@@ -1,5 +1,16 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { useTheme } from '@/app/providers/ThemeProvider';
+import Button from './Button';
+import { Card,CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './Card';
+import BoxInput from './BoxInput';
+import Label from './Label';
+import Select from './Select';
+import TextArea from './TextArea';
+import CheckBox from './CheckBox';
+import { HiUserCircle } from "react-icons/hi";
+
+import { motion } from 'framer-motion';
+
 const jobTypeOptions = ["Permanent", "Temporary", "Intership"];
 const educationOptions = ["Bachelors", "Masters", "Phd"];
 const industriesOptions = [
@@ -18,227 +29,134 @@ const experienceOptions = [
 ];
 const CreateJobForm = () => {
   const { theme } = useTheme();
+  const [formData] = useState({
+    title: "",
+    company: "",
+    location: "",
+    type: "",
+    salary: "",
+    description: "",
+    requirements: "",
+    remote: false,
+  });
+
+  const formItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0,transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1]} },
+  };
+
+  const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log(e.target.value);
+  }
+
   return (
-    <div>
-      <form className={`${theme === 'light'? 'bg-gray-300 text-black':'bg-gray-800 text-white'} p-6`}>
-      <div className="space-y-12">
-        <div className=" border-gray-900/10 pb-12">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">New Job</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Create a new job.
-          </p>
+    <div className=''>
+      <Card className={`${theme === 'light' ? 'bg-gray-300 text-gray-900 border-gray-400':'bg-gray-800 text-gray-100'}`}> 
+        <CardHeader>
+          <CardTitle>Create a New Job</CardTitle>
+          <CardDescription>Fill out the form below to post a new job opening.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <motion.form
+             initial="hidden"
+             whileInView="visible"
+             viewport={{ once: true, amount: 0.3 }} // Animate when 30% of the form is in view
+             transition={{ staggerChildren: 0.2 }}
+             
+          >
+            <div className="grid w-full items-center gap-4">
+              {/*Company information */}
+              <motion.h2 variants={formItemVariants} className="text-xl font-semibold mb-4">1. Your company</motion.h2>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-4">
-              <label htmlFor="title" className="block text-sm font-medium leading-6">
-                Job Title
-              </label>
-              <div className="mt-2">
-                  <input
-                    type="text"
-                    placeholder="Enter Job Title"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-              </div>
-            </div>
+              <motion.div variants={formItemVariants} className="flex flex-col space-y-1.5"> {/* Company Name */}
+                <Label htmlFor="company" label="Company Name" theme={theme} />
+                <BoxInput name="company" placeholder="Your Company Name" type='text' value={formData.company} onChange={onChange} theme={theme}/>
+              </motion.div>
 
-            <div className="col-span-full">
-              <label htmlFor="description" className="block text-sm font-medium leading-6">
-                Description
-              </label>
-              <div className="mt-2">
-                <textarea
-                  placeholder="Enter Job Description"
-                  required
-                  rows={3}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5"> {/* Address */}
+                <Label htmlFor="address" label="Address" theme={theme} />
+                <BoxInput name="address" placeholder="e.g. New York, NY or Remote" type='text' value={formData.location} onChange={onChange} theme={theme}/>
+              </motion.div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7">Job Details</h2>
+              <motion.div variants={formItemVariants}  className="col-span-full">
+                <Label htmlFor="photo" label="Company Logo" theme={theme} />
+                <div className="mt-2 flex items-center gap-x-3">
+                  <HiUserCircle aria-hidden="true" className={`h-12 w-12 ${theme === 'light' ? 'text-gray-900':'text-gray-100'}`} />
+                  <button
+                    type="button"
+                    className={`rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-sm ring-1 ring-inset ${theme === 'light' ? 'bg-gray-300 text-gray-900 ring-gray-400':'bg-gray-800 text-gray-100 ring-gray-200'}`}
+                  >
+                    Change
+                  </button>
+                </div>
+              </motion.div>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <label htmlFor="email" className="block text-sm font-medium leading-6">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  type="email"
-                  placeholder="Enter Your Email"
-                  pattern="\S+@\S+\.\S+"
-                  title="Your email is invalid"
-                  
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5"> {/* Email */}
+                <Label htmlFor="email" label="Email" theme={theme} />
+                <BoxInput name="email" placeholder="e.g. New York, NY or Remote" type='text' value={formData.location} onChange={onChange} theme={theme}/>
+              </motion.div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="address" className="block text-sm font-medium leading-6">
-                Address
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  placeholder="Enter Address"
-                  
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5">
+                <Label htmlFor="industry" label="Industry " theme={theme} />
+                <Select placeholder="Select Industry" values={industriesOptions}/> 
+              </motion.div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="salary" className="block text-sm font-medium leading-6">
-                Salary
-              </label>
-              <div className="mt-2">
-                <input
-                  type="number"
-                  placeholder="Enter Salary Range"
-                  
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label htmlFor="company" className="block text-sm font-medium leading-6">
-                Company Name
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  placeholder="Enter Company Name"
-                  
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="jobType" className="block text-sm font-medium leading-6">
-                Job Type
-              </label>
-              <div className="mt-2">
-                <select
-                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                    {jobTypeOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label htmlFor="education" className="block text-sm font-medium leading-6">
-                Level of Education
-              </label>
-              <div className="mt-2">
-                <select
-                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                    {educationOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label htmlFor="industry" className="block text-sm font-medium leading-6">
-                Industry
-              </label>
-              <div className="mt-2">
-                <select
-                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                    {industriesOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label htmlFor="experience" className="block text-sm font-medium leading-6">
-                Level of Experience
-              </label>
-              <div className="mt-2">
-                <select
-                  
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                    {experienceOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-              </div>
-            </div>
-            <div className="sm:col-span-3">
-              <label htmlFor="position" className="block text-sm font-medium leading-6">
-                Number of Positions
-              </label>
-              <div className="mt-2">
-                <input
-                  type="number"
-                  placeholder="Enter No. of Positions"
-                  
-                  required
-                  min={1}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            <div className="">
-              <label htmlFor="remote" className="block text-sm font-medium leading-6">
-                Remote
-              </label>
-              <div className="mt-2">
-                <input
-                   id="remote"
-                   name="remote"
-                   type="checkbox"
-                   
-                   className="block w-4 rounded-md border-0 py-1.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
+              {/*Company information */}
+              <motion.h2 variants={formItemVariants} className="text-xl font-semibold mb-4">2. The Role</motion.h2>
 
-            
-          </div>
-        </div>
-      </div>
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5"> {/* Job Title */}
+                <Label htmlFor="title" label="Position Name" theme={theme} />
+                <BoxInput name="title" placeholder="e.g. Senior React Developer" type='text' value={formData.title} onChange={onChange} theme={theme}/>
+              </motion.div>
+              
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5">
+                <Label htmlFor="description" label="Position Description" theme={theme} />
+                <TextArea name="description" placeholder="Enter the job description..." value={formData.description} onChange={onChange} theme={theme}/>
+              </motion.div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6">
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
-      </div>
-    </form>
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5">
+                <Label htmlFor="type" label="Job Type" theme={theme} />
+                <Select placeholder="Select Job Type" values={jobTypeOptions} />
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5">
+                <Label htmlFor="salary" label="Salary Range" theme={theme} />
+                <BoxInput name="salary" placeholder="e.g. $80,000 - $120,000" type='text' value={formData.salary} onChange={onChange} theme={theme}/>
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className='flex flex-col space-y-1.5'>
+                <Label htmlFor="education" label="Education" theme={theme} />
+                <Select placeholder="Select Education" values={educationOptions} />
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className='flex flex-col space-y-1.5'>
+                <Label htmlFor="experience" label="Experience" theme={theme} />
+                <Select placeholder="Select Experience" values={experienceOptions} />
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className='flex flex-col space-y-1.5'>
+                <Label htmlFor="experience" label="Number of open positions" theme={theme} />
+                <BoxInput name="experience" placeholder="Number of open positions" type='number' value={formData.title} onChange={onChange} theme={theme}/>
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className='flex flex-col space-y-1.5'>
+                <Label htmlFor="remote" label="Remote" theme={theme} />
+                <CheckBox value={formData.remote} onChange={onChange} name='This is a remote position'/>
+              </motion.div>
+
+              <motion.div variants={formItemVariants}  className="flex flex-col space-y-1.5">
+                <Label htmlFor="keywords" label="KeyWords" theme={theme} />
+                <TextArea name="keywords" placeholder="Enter keywords seperated by comma..." value={formData.description} onChange={onChange}theme={theme}/>
+              </motion.div>
+            </div>
+          </motion.form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button type='button' text='Clear' className='w-full mb-4 text-[18px] mt-6 rounded-full text-gray-600 py-2' />
+          <Button type='button' text='Create Job Posting' className='w-full mb-4 text-[18px] mt-6 rounded-full text-purple-600 hover:bg-purple-600 py-2 transition-colors duration-300 hover:text-gray-100' />
+        </CardFooter>
+      </Card>
     </div>
   )
 }
