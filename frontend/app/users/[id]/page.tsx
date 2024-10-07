@@ -130,7 +130,7 @@ const Page = () => {
                   <p className="text-muted-foreground">
                     Very well thought out and articulate communication. Clear milestones, deadlines and fast work. Patience.
                     Infinite patience. No shortcuts. Even if the client is being careless. Some quick example text to build on the
-                    card title and bulk the card's content Moltin gives you platform.
+                    card title and bulk the card&apos;s content Moltin gives you platform.
                   </p>
                   <p className="mt-4 text-muted-foreground">
                     As a highly skilled and successful product development and design specialist with more than 4 Years of My
