@@ -69,7 +69,7 @@ const TestimonialsColumn = (props:{className?:string; testimonials: typeof testi
               <div key={index}>
                 {props.testimonials.map(({ text, imageSrc, name, position,company }, index) => (
                   <div key={index}
-                    className={`flex items-center p-4 my-4 rounded-lg shadow-md transition duration-200 ${theme === 'dark'? 'bg-gray-800 text-gray-100': 'bg-gray-100 text-gray-400'}`}
+                    className={`flex items-center p-4 my-4 rounded-lg shadow-md transition duration-200 ${theme === 'dark'? 'bg-gray-800 text-gray-100 shadow-gray-50': 'bg-gray-100 text-gray-400 shadow-gray-950'}`}
                   >
                     <Image
                       src={imageSrc}

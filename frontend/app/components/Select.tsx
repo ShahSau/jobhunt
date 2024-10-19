@@ -8,12 +8,13 @@ interface SelectProps {
     classNameD?:string;
     placeholder:string;
     classNameO?:string;
+    theme:string;
 }
 
 
-const Select= ({values,classNameS,placeholder,classNameO}:SelectProps) => {
+const Select= ({values,classNameS,placeholder,classNameO,theme}:SelectProps) => {
   return (
-    <select className={cn('flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',classNameS)}>
+    <select className={cn(`flex h-10 w-full items-center justify-between rounded-md border border-input border-green-600 bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`, classNameS, theme === 'light' ? 'bg-gray-300 border-gray-400' : 'bg-gray-800 border-gray-300')}>
         <option value="" >
             {placeholder}
         </option>
