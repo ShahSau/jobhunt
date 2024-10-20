@@ -44,12 +44,10 @@ function JobListing({ logo, title, company, location, salary, tags = [], experie
           <span>{location}</span>
           <MdEuro className="w-4 h-4 lg:ml-2" />
           <span>{salary}</span>
-          
             <>
               <IoBriefcase className="w-4 h-4 lg:ml-2" />
               <span>{experience}</span>
             </>
-          
         </div>
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
