@@ -1,6 +1,9 @@
 import React from 'react'
 import { LuUser,LuDownload } from "react-icons/lu";
 import { IoLocationOutline,IoLogoLinkedin,IoLogoGithub } from "react-icons/io5";
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
 interface Freelancer {
     id: number
     name: string
@@ -11,12 +14,19 @@ interface Freelancer {
     description: string
     status: "online" | "offline"
   }
-
+  const cardItemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0,transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1]} },
+  };
 const CandidateCard = ({freelancer,theme}: {freelancer: Freelancer, theme:string}) => {
   return (
-    <div key={freelancer.id} className={`rounded-lg shadow-md p-6 flex flex-col border shadow-gray-500 ${theme === 'light' ? 'bg-gray-300 text-gray-900 border-gray-400':'bg-gray-800 text-gray-100'}`}>
+    <motion.div 
+        key={freelancer.id} 
+        className={`rounded-lg shadow-md p-6 flex flex-col border shadow-gray-500 ${theme === 'light' ? 'bg-gray-300 text-gray-900 border-gray-400':'bg-gray-800 text-gray-100'}`}
+        variants={cardItemVariants}
+        >
             <div className="flex items-center mb-4">
-              <img
+              <Image
                 src={freelancer.image}
                 alt={freelancer.name}
                 className="w-20 h-20 rounded-full mr-4"
@@ -51,7 +61,7 @@ const CandidateCard = ({freelancer,theme}: {freelancer: Freelancer, theme:string
                     Download CV
                 </button>
             </div>
-          </div>
+          </motion.div>
   )
 }
 

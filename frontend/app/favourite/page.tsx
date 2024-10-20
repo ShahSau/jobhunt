@@ -1,13 +1,14 @@
 'use client'
 import React from 'react'
 import Header from '../components/Header'
-import { FaHeart } from "react-icons/fa";
+//import { FaHeart } from "react-icons/fa";
 import { MdLocationPin,MdEuro,  } from "react-icons/md";
 import { IoBriefcase } from "react-icons/io5";
 import Button from '../components/Button';
 import Badge from '../components/Badge';
 import { motion } from 'framer-motion';
 import { useTheme } from '../providers/ThemeProvider';
+import Image from 'next/image';
 
 
 
@@ -35,7 +36,7 @@ function JobListing({ logo, title, company, location, salary, tags = [], experie
       variants={cardItemVariants}
       className="flex items-center space-x-4 p-4 border rounded-lg mx-12"
     >
-      <img src={logo} alt={`${company} logo`} className="w-12 h-12 rounded" /> 
+      <Image src={logo} alt={`${company} logo`} className="w-12 h-12 rounded" /> 
       <div className="flex-grow">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-sm">{company}</p>
