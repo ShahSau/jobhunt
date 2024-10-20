@@ -128,14 +128,16 @@ const Page = () => {
         >
           All Candidates applied for the job
         </motion.h1>
-        <motion.div className="m-6 h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div 
+          className="m-6 h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {
             freelancers.map((freelancer) => (
               <CandidateCard key={freelancer.id} freelancer={freelancer} theme={theme} />
             ))
 
           }
-        </motion.div>
+        </div>
       </motion.div>
 
 
