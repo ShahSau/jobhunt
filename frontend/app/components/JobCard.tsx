@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import React from 'react'
 import { LuHeart } from "react-icons/lu";
 import { MdOutlineArrowOutward } from "react-icons/md";
@@ -29,7 +30,7 @@ const JobCard: React.FC<{ job: Job, theme:string }> = ({ job,theme }) => {
         variants={cardItemVariants}
     >
     <div className="flex justify-between items-start mb-4">
-      <img src={job.logo} alt={job.company} className="w-10 h-10 rounded" />
+      <Image src={job.logo} alt={job.company} className="w-10 h-10 rounded" />
       <button className=" hover:text-red-500">
         <LuHeart className="w-6 h-6" />
       </button>

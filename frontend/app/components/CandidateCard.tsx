@@ -2,6 +2,7 @@ import React from 'react'
 import { LuUser,LuDownload } from "react-icons/lu";
 import { IoLocationOutline,IoLogoLinkedin,IoLogoGithub } from "react-icons/io5";
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 interface Freelancer {
     id: number
@@ -25,7 +26,7 @@ const CandidateCard = ({freelancer,theme}: {freelancer: Freelancer, theme:string
         variants={cardItemVariants}
         >
             <div className="flex items-center mb-4">
-              <img
+              <Image
                 src={freelancer.image}
                 alt={freelancer.name}
                 className="w-20 h-20 rounded-full mr-4"
