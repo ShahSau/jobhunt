@@ -39,17 +39,15 @@ function JobListing({ logo, title, company, location, salary, tags = [], experie
       <div className="flex-grow">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-sm">{company}</p>
-        <div className="flex items-center space-x-2 mt-1 text-sm">
+        <div className="flex lg:items-center space-x-2 mt-1 text-sm flex-col lg:flex-row">
           <MdLocationPin className="w-4 h-4" />
           <span>{location}</span>
-          <MdEuro className="w-4 h-4 ml-2" />
+          <MdEuro className="w-4 h-4 lg:ml-2" />
           <span>{salary}</span>
-          
             <>
-              <IoBriefcase className="w-4 h-4 ml-2" />
+              <IoBriefcase className="w-4 h-4 lg:ml-2" />
               <span>{experience}</span>
             </>
-          
         </div>
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
@@ -59,9 +57,9 @@ function JobListing({ logo, title, company, location, salary, tags = [], experie
           </div>
         )}
       </div>
-      <div className="flex space-x-2 ">
-
-        <Button type='button' icon={<FaHeart />} text='' className=' text-red-500 ' />
+      <div className="space-x-2 hidden md:flex">
+        <Button type='button' icon='' text='Remove from fav' className=' text-red-500 broder border-red-500' />
+        <Button type='button' icon='' text='Job details' className=' text-red-500 ' />
       </div>
     </motion.div>
   )
@@ -136,6 +134,7 @@ const Page = () => {
 
   ]
   return (
+    // render only the visible job on the screen
     <div className={`${theme === 'light' ? 'bg-gray-300 text-gray-900 border-gray-400':'bg-gray-800 text-gray-100'}`}>
       <Header />
       <motion.div 
@@ -150,7 +149,7 @@ const Page = () => {
         >
           My Favourite Jobs
         </motion.h1>
-        <motion.div className="space-y-4">
+        <motion.div className="space-y-4 w-full xl:w-2/3 ml-0  xl:ml-80">
           {jobs.map((job, index) => (
             <JobListing key={index} {...job} />
           ))}
