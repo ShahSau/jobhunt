@@ -36,7 +36,13 @@ function JobListing({ logo, title, company, location, salary, tags = [], experie
       variants={cardItemVariants}
       className="flex items-center space-x-4 p-4 border rounded-lg mx-12"
     >
-      <Image src={logo} alt={`${company} logo`} className="w-12 h-12 rounded" /> 
+      <Image 
+        src={logo} 
+        alt={`${company} logo`} 
+        className="rounded" 
+        width={48}
+        height={48}
+      /> 
       <div className="flex-grow">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-sm">{company}</p>

@@ -29,7 +29,13 @@ const CompanyJobCard: FC<{ job: JobListing,theme:string }> = ({ job,theme }) => 
         <div>
             <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center">
-                    <Image src={job.logo} alt={job.company} className="w-10 h-10 mr-4" />
+                    <Image 
+                        src={job.logo} 
+                        alt={job.company} 
+                        className="mr-4"
+                        width={40}
+                        height={40} 
+                    />
                     <div>
                         <h2 className="text-xl font-semibold">{job.title}</h2>
                         <p className="text-sm">{job.experience}</p>

@@ -30,7 +30,13 @@ const JobCard: React.FC<{ job: Job, theme:string }> = ({ job,theme }) => {
         variants={cardItemVariants}
     >
     <div className="flex justify-between items-start mb-4">
-      <Image src={job.logo} alt={job.company} className="w-10 h-10 rounded" />
+      <Image 
+        src={job.logo} 
+        alt={job.company} 
+        className="rounded" 
+        width={40}
+        height={40}
+      />
       <button className=" hover:text-red-500">
         <LuHeart className="w-6 h-6" />
       </button>

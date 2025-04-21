@@ -29,7 +29,10 @@ const CandidateCard = ({freelancer,theme}: {freelancer: Freelancer, theme:string
               <Image
                 src={freelancer.image}
                 alt={freelancer.name}
-                className="w-20 h-20 rounded-full mr-4"
+                className="rounded-full mr-4"
+                width={80}
+                height={80}
+                
               />
               <div>
                 <h2 className="text-xl font-semibold">{freelancer.name}</h2>
