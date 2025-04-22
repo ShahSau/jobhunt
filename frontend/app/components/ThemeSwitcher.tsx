@@ -9,7 +9,7 @@ const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className={`flex items-center justify-center transition-colors`}>
+    <div className="flex items-center justify-center transition-colors">
       <DarkModeToggle theme={theme} setTheme={setTheme} />
     </div>
   );
@@ -25,7 +25,7 @@ const DarkModeToggle = ({
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className={`p-2 w-28 rounded-full flex shadow-lg relative bg-gradient-to-b ${
+      className={`md:p-2  md:w-28 rounded-full flex shadow-lg relative bg-gradient-to-b ${
         theme === "light"
           ? "justify-end from-blue-500 to-sky-300"
           : "justify-start from-indigo-600 to-indigo-400"
@@ -101,7 +101,7 @@ const Stars = () => {
           duration: 5,
           ease: "easeIn",
         }}
-        className="text-slate-300 text-xs absolute right-10 top-2"
+        className="hidden md:block text-slate-300 text-xs absolute right-10 top-2"
       >
         <BsStarFill />
       </motion.span>
@@ -116,7 +116,7 @@ const Stars = () => {
           ease: "easeIn",
         }}
         style={{ rotate: "-45deg" }}
-        className="text-slate-300 text-lg absolute right-4 top-3"
+        className="hidden md:block text-slate-300 text-lg absolute right-4 top-3"
       >
         <BsStarFill />
       </motion.span>
@@ -131,7 +131,7 @@ const Stars = () => {
           duration: 2.5,
           ease: "easeIn",
         }}
-        className="text-slate-300 absolute right-8 top-8"
+        className="hidden md:block text-slate-300 absolute right-8 top-8"
       >
         <BsStarFill />
       </motion.span>
@@ -149,7 +149,7 @@ const Clouds = () => {
           repeat: Infinity,
           delay: 0.25,
         }}
-        className="text-white text-xs absolute left-10 top-1"
+        className="hidden md:block text-white text-xs absolute left-10 top-1"
       >
         <BsFillCloudyFill />
       </motion.span>
@@ -160,7 +160,7 @@ const Clouds = () => {
           repeat: Infinity,
           delay: 0.5,
         }}
-        className="text-white text-lg absolute left-4 top-4"
+        className="hidden md:block text-white text-lg absolute left-4 top-4"
       >
         <BsFillCloudyFill />
       </motion.span>
@@ -170,7 +170,7 @@ const Clouds = () => {
           duration: 12.5,
           repeat: Infinity,
         }}
-        className="text-white absolute left-9 top-8"
+        className="hidden md:block text-white absolute left-9 top-8"
       >
         <BsFillCloudyFill />
       </motion.span>
@@ -181,7 +181,7 @@ const Clouds = () => {
           repeat: Infinity,
           delay: 0.75,
         }}
-        className="text-white absolute text-xs left-14 top-4"
+        className="hidden md:block text-white absolute text-xs left-14 top-4"
       >
         <BsFillCloudyFill />
       </motion.span>
